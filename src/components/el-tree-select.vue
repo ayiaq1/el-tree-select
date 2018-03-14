@@ -11,6 +11,7 @@ demo:
     :data="treeData"
     :props="props"
     :isEdit="true"
+    :clickParent="true"
     :renderContent="renderContent"
     @treeSearch="searchFun"
     @nodeClick="nodeClick"
@@ -38,6 +39,7 @@ multiple：       是否多选，默认：false
 v-model         绑定的值
 remoteSearch：   是否从远程搜索数据，默认本地：false
 placeholder：    搜索框的placeholder
+clickParent:     树菜单点击事件（是否支持直接点击父级,nodeClick方法判断如果clickParent往上抛出）
 searchFun：      搜索事件，remoteSearch=true时触发
 nodeClick:       树菜单点击事件（只有点击为最末层子集的时候才触发）
 treeNodeCheckFun:树多选框选择时候触发（必须条件：multiple=true）
