@@ -50,7 +50,7 @@ renderContent:    树自定义显示内容
 
 
 <template>
-    <div class="el-select el-treeselect" v-clickoutside="handleClose">
+    <div class="el-select elTreeSelect" v-clickoutside="handleClose">
         <el-tooltip :enterable="false" effect="dark" :content="label" :placement="placement"
                     :disabled="label.length<10">
             <el-input v-if='!isEdit'
@@ -79,7 +79,7 @@ renderContent:    树自定义显示内容
             @after-leave="doDestroy">
             <el-select-menu
                 ref="popper"
-                class="el-treeselectMenu"
+                class="elTreeSelectMenu"
                 v-show="visible">
                 <el-input
                     v-model="searchKey"
@@ -110,6 +110,16 @@ renderContent:    树自定义显示内容
         </transition>
     </div>
 </template>
+<style type="text/css">
+    /*---下拉框样式------*/
+.elTreeSelect > input{content:'';text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+.elTreeSelect .selectInput > input{padding-left:5px;padding-right:5px;}
+.elTreeSelectMenu{z-index:9999!important;}
+.elTreeSelectMenu .searchInput{padding:10px;width: 93%;}
+.elTreeSelectMenu .searchInput .el-button{min-width:auto;}
+.elTreeSelectMenu  .el-tree .el-tree-node.is-current > .el-tree-node__content{background-color:rgba(52,184,225,0.5);}
+.elTreeSelectMenu  .el-tree .el-tree-node.is-current > .el-tree-node__content:hover{background-color:rgba(52,184,225,0.5);}
+</style>
 <script type="text/jsx">
     import Emitter from 'element-ui/src/mixins/emitter';
     import Locale from 'element-ui/src/mixins/locale';

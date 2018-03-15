@@ -1,30 +1,24 @@
 <template>
-    <div id="app">
-        <elTreeselect
-            v-model="title"
-            :remoteSearch="true"
-            placeholder="请输入搜索内容"
-            :data="treeData"
-            :props="props"
-        >
-        </elTreeselect>
-    </div>
+  <div id="app">
+    <elTreeselect v-model="title" :remoteSearch="true" placeholder="请输入搜索内容" :data="treeData" :props="props">
+    </elTreeselect>
+  </div>
 </template>
-
 <script>
 import elTreeselect from './components/el-tree-select.vue'
-    export default {
-        name: 'App',
-        data() {
-            return {
-                title: '1232',
-                treeData: [{flowId: 1, name: '123'}],
-                props: {
-                    label: 'name',
-                    vaule: 'flowId'
-                }
-            };
-        },
-        components: {elTreeselect}
+export default {
+  name: 'App',
+  data() {
+    return {
+      title: '1232',
+      treeData: [{ flowId: 1, name: '123' }, { flowId: 2, name: '456' }],
+      props: {
+        label: 'name',
+        vaule: 'flowId'
+      }
     };
+  },
+  components: { elTreeselect }
+};
+
 </script>

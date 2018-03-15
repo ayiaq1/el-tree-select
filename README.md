@@ -24,7 +24,8 @@
     renderContent:    树自定义显示内容
 
 ### 更新日志
-1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
+    1.4.4:增加CSS样式
+    1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
 
 ### DEMO
 #### div
