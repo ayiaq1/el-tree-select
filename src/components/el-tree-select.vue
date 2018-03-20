@@ -117,7 +117,7 @@ renderContent:    树自定义显示内容
 .elTreeSelectMenu{z-index:9999!important;}
 .elTreeSelectMenu .searchInput{padding:10px;width: 93%;}
 .elTreeSelectMenu .searchInput .el-button{min-width:auto;}
-.elTreeSelectMenu  .el-tree .el-tree-node.is-current > .el-tree-node__content{background-color:rgba(52,184,225,0.5);}
+.elTreeSelectMenu .el-tree .el-tree-node.is-current > .el-tree-node__content{background-color:rgba(52,184,225,0.5);}
 .elTreeSelectMenu  .el-tree .el-tree-node.is-current > .el-tree-node__content:hover{background-color:rgba(52,184,225,0.5);}
 </style>
 <script type="text/jsx">
