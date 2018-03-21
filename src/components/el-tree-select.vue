@@ -1,56 +1,4 @@
 <!--扩展element-ui 下拉树状菜单-->
-
-<!--
-demo:
-
-<el-treeselect
-    multiple
-    v-model="title"
-    :remoteSearch="true"
-    placeholder="请输入搜索内容"
-    :data="treeData"
-    :props="props"
-    :isEdit="true"
-    :disabled="true"
-    :clickParent="true"
-    :renderContent="renderContent"
-    @treeSearch="searchFun"
-    @nodeClick="nodeClick"
-    @treeNodeCheckFun="treeNodeCheckFun"
-    @show="showFun"
-    @hide="function(val){hideMdataFun(scope.row,val)}"
->
-</el-treeselect>
-
-// 如果启用了 isEdit 那么在 hide的时候 需要当前一行的 row.name = val
-
-参数：
-树菜单过滤数据：
-props: {
-    children: 'children',
-    label: 'name',
-    id: 'flowId'           // 选中之后的id名称
-}
-
-disabled        是否禁用
-loadingTxt      加载中的文字
-isEdit          是否支持手动输入
-placement       显示文本框的tips位置
-data:           树菜单数据
-multiple：       是否多选，默认：false
-v-model         绑定的值
-remoteSearch：   是否从远程搜索数据，默认本地：false
-placeholder：    搜索框的placeholder
-clickParent:     树菜单点击事件（是否支持直接点击父级,nodeClick方法判断如果clickParent往上抛出）
-searchFun：      搜索事件，remoteSearch=true时触发
-nodeClick:       树菜单点击事件（只有点击为最末层子集的时候才触发）
-treeNodeCheckFun:树多选框选择时候触发（必须条件：multiple=true）
-show:             树显示
-hide:             树隐藏
-renderContent:    树自定义显示内容
--->
-
-
 <template>
     <div class="el-select elTreeSelect" v-clickoutside="handleClose">
         <el-tooltip :enterable="false" effect="dark" :content="label" :placement="placement"
@@ -221,7 +169,7 @@ renderContent:    树自定义显示内容
                         children: 'children',
                         label: 'name',
                         disabled: 'disabled',
-                        id: 'flowId' // 选中之后的id名称
+                        value: 'flowId' // 选中之后的id名称
                     };
                 }
             }
@@ -288,7 +236,7 @@ renderContent:    树自定义显示内容
                     if (!item.children || item.children.length === 0) {
                         str += item[this.props.label] + ',';
                         checks.push(item);
-                        ids.push(item[this.props.id]);
+                        ids.push(item[this.props.value]);
                     }
                 });
                 this.label = str.substr(0, str.length - 1);

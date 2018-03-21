@@ -5,7 +5,7 @@
     props: {    树菜单过滤数据
         children: 'children',
         label: 'name',
-        id: 'flowId'// 选中之后的id名称
+        value: 'flowId'// 选中之后的id名称
     }
     disabled        是否禁用
     loadingTxt      加载中的文字
@@ -25,6 +25,7 @@
     renderContent:    树自定义显示内容
 
 ### 更新日志
+    1.4.7:props.id改为props.value
     1.4.6:修复clickParent=true之后点击父级关闭下拉问题，补全API：disabled
     1.4.5:修改webpack配置，打包css忽略z-index
     1.4.4:增加CSS样式
@@ -58,11 +59,11 @@
     export default {
         data() {
         return {
-                title: 'test',
-                treeData: [{flowId: 1, name: '123'}],
-                props: {
+            title: 'test',
+            treeData: [{flowId: 1, name: '123'}],
+            props: {
                 label: 'name',
-                vaule: 'flowId'
+                value: 'flowId'
             }
         };
     },
