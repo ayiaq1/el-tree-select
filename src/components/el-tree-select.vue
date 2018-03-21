@@ -11,6 +11,7 @@ demo:
     :data="treeData"
     :props="props"
     :isEdit="true"
+    :disabled="true"
     :clickParent="true"
     :renderContent="renderContent"
     @treeSearch="searchFun"
@@ -31,6 +32,7 @@ props: {
     id: 'flowId'           // 选中之后的id名称
 }
 
+disabled        是否禁用
 loadingTxt      加载中的文字
 isEdit          是否支持手动输入
 placement       显示文本框的tips位置
@@ -110,7 +112,7 @@ renderContent:    树自定义显示内容
         </transition>
     </div>
 </template>
-<style type="text/css">
+<style scoped>
     /*---下拉框样式------*/
 .elTreeSelect > input{content:'';text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
 .elTreeSelect .selectInput > input{padding-left:5px;padding-right:5px;}
@@ -302,7 +304,6 @@ renderContent:    树自定义显示内容
                     this.label = data[this.props.label];
                     this.$emit('input', this.label);
                     this.$emit('nodeClick', data, node, tree);
-                    this.handleClose();
                 }
             },
             handleIconHide() {

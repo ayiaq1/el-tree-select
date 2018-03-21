@@ -1,6 +1,6 @@
 {
   "name": "el-tree-select",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "基于element-ui2.x扩展下拉带树的组件",
   "author": "dawdler",
   "private": false,
@@ -14,8 +14,11 @@
     "type": "git",
     "url": "https://github.com/ayiaq1/el-tree-select"
   },
-  "bugs":{"url":"https://github.com/ayiaq1/el-tree-select/issues","email":"250751717@qq.com"},
-  "keywords":[
+  "bugs": {
+    "url": "https://github.com/ayiaq1/el-tree-select/issues",
+    "email": "250751717@qq.com"
+  },
+  "keywords": [
     "vue",
     "element-ui",
     "select",
@@ -43,6 +46,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "node-notifier": "^5.1.2",
+    "open-browser-webpack-plugin": "0.0.5",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",

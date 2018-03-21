@@ -7,6 +7,7 @@
         label: 'name',
         id: 'flowId'// 选中之后的id名称
     }
+    disabled        是否禁用
     loadingTxt      加载中的文字
     isEdit          是否支持手动输入
     placement       显示文本框的tips位置
@@ -24,6 +25,7 @@
     renderContent:    树自定义显示内容
 
 ### 更新日志
+    1.4.6:修复clickParent=true之后点击父级关闭下拉问题，补全API：disabled
     1.4.5:修改webpack配置，打包css忽略z-index
     1.4.4:增加CSS样式
     1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
@@ -39,6 +41,7 @@
         :props="props"
         :isEdit="true"
         :clickParent="true"
+        :disabled="true"
         :renderContent="renderContent"
         @treeSearch="searchFun"
         @nodeClick="nodeClick"
