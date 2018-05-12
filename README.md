@@ -1,6 +1,9 @@
 ## 基于element-ui2.x扩展下拉带树的组件 下拉树状菜单
 ## 目前已剥离组件可作为独立插件使用
 
+###
+![Image text](https://github.com/ayiaq1/el-tree-select/blob/master/demo.jpg)
+
 #### 参数：
     // 如果启用了 isEdit 那么在 hide的时候 需要当前一行的 row.name = val
     props: {    树菜单过滤数据
