@@ -64,24 +64,20 @@
     /*---下拉框样式------*/
 .elTreeSelect > input{content:'';text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
 .elTreeSelect .selectInput > input{padding-left:5px;padding-right:5px;}
-.elTreeSelectMenu{z-index:9999!important;}
+.elTreeSelectMenu{z-index:9999!important;min-width:100px !important;}
 .elTreeSelectMenu .searchInput{padding:10px;width: 93%;}
 .elTreeSelectMenu .searchInput .el-button{min-width:auto;}
 .elTreeSelectMenu .el-tree .el-tree-node.is-current > .el-tree-node__content{background-color:rgba(52,184,225,0.5);}
 .elTreeSelectMenu  .el-tree .el-tree-node.is-current > .el-tree-node__content:hover{background-color:rgba(52,184,225,0.5);}
 </style>
 <script type="text/jsx">
-    import Emitter from 'element-ui/src/mixins/emitter';
-    import Locale from 'element-ui/src/mixins/locale';
-    import ElInput from 'element-ui/packages/input';
-    import ElSelectMenu from 'element-ui/packages/select/src/select-dropdown.vue';
-    import Clickoutside from 'element-ui/src/utils/clickoutside';
-    import {addClass, removeClass} from 'element-ui/src/utils/dom';
-    import {
-        addResizeListener,
-        removeResizeListener
-    } from 'element-ui/src/utils/resize-event';
-
+    import Emitter from '@element-ui/src/mixins/emitter';
+    import Locale from '@element-ui/src/mixins/locale';
+    import ElInput from '@element-ui/packages/input';
+    import ElSelectMenu from '@element-ui/packages/select/src/select-dropdown.vue';
+    import Clickoutside from '@element-ui/src/utils/clickoutside';
+    import {addClass, removeClass} from '@element-ui/src/utils/dom';
+    import {addResizeListener,removeResizeListener} from '@element-ui/src/utils/resize-event';
     export default {
         name:'el-tree-select',
         mixins: [Emitter, Locale],

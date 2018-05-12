@@ -1,4 +1,5 @@
 ## 基于element-ui2.x扩展下拉带树的组件 下拉树状菜单
+## 目前已剥离组件可作为独立插件使用
 
 #### 参数：
     // 如果启用了 isEdit 那么在 hide的时候 需要当前一行的 row.name = val
@@ -25,7 +26,10 @@
     renderContent:    树自定义显示内容
 
 ### 更新日志
-    1.5.0:修复element-ui更新之后不显示插件的问题（修复之后打包会有压缩不成功的警告，不影响项目打包）
+    2.0.0:修复IE兼容性，修复打包有压缩警告问题，剥离element-ui，可作为独立插件使用
+    1.6.5:有压缩不成功的警告(webpack配置压缩对element-ui下的request不生效)
+    1.6.0:修复element-ui打包会有压缩不成功的警告，锁定package.json的vue,element-ui版本
+    1.5.0:修复element-ui更新之后不显示插件的问题
     1.4.9:demo的名称导入错误修改
     1.4.8:修复部分代码打包没有压缩问题
     1.4.7:props.id改为props.value
@@ -58,7 +62,7 @@
 
 #### script
 
-    import elTreeselect from 'el-tree-select'
+    import elTreeselect from 'el-tree-select';
     export default {
         data() {
         return {

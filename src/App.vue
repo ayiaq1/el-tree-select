@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <elTreeselect v-model="title" :remoteSearch="true" placeholder="请输入搜索内容" :data="treeData" :props="props">
+    <elTreeselect v-model="title" placeholder="请输入搜索内容" :data="treeData" :props="props">
     </elTreeselect>
   </div>
 </template>
 <script>
-import elTreeselect from './components/el-tree-select.vue'
+import elTreeselect from './components/el-tree-select.vue';
 export default {
   name: 'App',
   data() {
