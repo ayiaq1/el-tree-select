@@ -29,6 +29,8 @@
     renderContent:    树自定义显示内容
 
 ### 更新日志
+    2.0.3:新增清空选择，clearable默认为true
+    2.0.2:优化：默认clickParent=true,取消箭头图标点击事件使用input默认点击
     2.0.0:修复IE兼容性，修复打包有压缩警告问题，剥离element-ui，可作为独立插件使用
     1.6.5:有压缩不成功的警告(webpack配置压缩对element-ui下的request不生效)
     1.6.0:修复element-ui打包会有压缩不成功的警告，锁定package.json的vue,element-ui版本
