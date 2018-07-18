@@ -8,8 +8,9 @@
                       class="selectIconInput"
                       v-model="label"
                       type="text"
+                      :readonly="!isEdit"
                       :disabled="disabled"
-                      @mousedown.native="handleMouseDown"
+                      @mouseup.native="handleMouseDown"
                       @mouseenter.native="inputHovering = true"
                       @mouseleave.native="inputHovering = false"
                       @keyup.native="handlekeyup">
@@ -92,7 +93,7 @@
                   !this.multiple &&
                   this.value !== undefined &&
                   this.value !== '';
-                return criteria ? 'circle-close is-show-close' : (this.remote && this.filterable ? '' : 'arrow-up');
+                return criteria ? 'circle-close is-show-close' : 'arrow-up';
             }
         },
         components: {
@@ -283,17 +284,14 @@
                 }
             },
             handleIconClick(event) {
-                event.preventDefault();
+                console.log('icon lick');
                 if (this.iconClass.indexOf('circle-close') > -1) {
                     this.deleteSelected(event);
                 }
             },
             handleMouseDown(event) {
-                event.preventDefault();
+                console.log('mouse down');
                 if (this.disabled) return;
-                if(this.inputHovering&&this.iconClass.indexOf('circle-close') > -1){
-                    return;
-                }
                 this.visible = !this.visible;
             },
             handlekeyup(event) {
@@ -302,8 +300,8 @@
             },
             // 清空选择
             deleteSelected(event) {
-                event.stopPropagation();
                 this.$emit('input', '');
+                this.$emit('clearFun');
                 this.handleClose();
             },
             doDestroy() {

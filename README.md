@@ -11,14 +11,14 @@
         label: 'name',
         value: 'flowId'// 选中之后的id名称
     }
-    disabled        是否禁用
+    disabled        是否禁用,默认:false
+    multiple：       是否多选，默认：false
+    isEdit          是否支持手动输入,默认:false
+    remoteSearch：   是否从远程搜索数据，默认本地：false
     loadingTxt      加载中的文字
-    isEdit          是否支持手动输入
     placement       显示文本框的tips位置
     data:           树菜单数据
-    multiple：       是否多选，默认：false
     v-model         绑定的值
-    remoteSearch：   是否从远程搜索数据，默认本地：false
     placeholder：    搜索框的placeholder
     clickParent:     树菜单点击事件（是否支持直接点击父级,nodeClick方法判断如果clickParent往上抛出）
     searchFun：      搜索事件，remoteSearch=true时触发
@@ -27,8 +27,10 @@
     show:             树显示
     hide:             树隐藏
     renderContent:    树自定义显示内容
+    clearFun:         清空文本框事件
 
 ### 更新日志
+    2.0.4:清空选择增加事件clearFun
     2.0.3:新增清空选择，clearable默认为true
     2.0.2:优化：默认clickParent=true,取消箭头图标点击事件使用input默认点击
     2.0.0:修复IE兼容性，修复打包有压缩警告问题，剥离element-ui，可作为独立插件使用

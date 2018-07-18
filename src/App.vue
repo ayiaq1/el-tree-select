@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <elTreeselect v-model="title" placeholder="请输入搜索内容" :data="treeData" :props="props">
+    <elTreeselect v-model="title" placeholder="请输入搜索内容" :data="treeData" :props="props" @clearFun="clearFun">
     </elTreeselect>
   </div>
 </template>
@@ -16,7 +16,12 @@ export default {
         label: 'name',
         vaule: 'flowId'
       }
-    };
+    }
+  },
+  methods: {
+    clearFun() {
+      console.log('clear fun');
+    }
   },
   components: { elTreeselect }
 };
