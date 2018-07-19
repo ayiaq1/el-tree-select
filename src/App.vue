@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <elTreeselect v-model="title" placeholder="请输入搜索内容" :data="treeData" :props="props" @clearFun="clearFun">
+    <elTreeselect v-model="title" clickParent placeholder="请输入搜索内容" :data="treeData" :props="props" @clearFun="clearFun">
     </elTreeselect>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       title: '1232',
-      treeData: [{ flowId: 1, name: '123' }, { flowId: 2, name: '456' }],
+      treeData: [{ flowId: 1, name: '123',children:[{flowId:3,name:'333333'}] }, { flowId: 2, name: '456' }],
       props: {
         label: 'name',
         vaule: 'flowId'

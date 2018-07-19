@@ -284,13 +284,11 @@
                 }
             },
             handleIconClick(event) {
-                console.log('icon lick');
                 if (this.iconClass.indexOf('circle-close') > -1) {
                     this.deleteSelected(event);
                 }
             },
             handleMouseDown(event) {
-                console.log('mouse down');
                 if (this.disabled) return;
                 this.visible = !this.visible;
             },

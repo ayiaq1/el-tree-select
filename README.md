@@ -30,6 +30,7 @@
     clearFun:         清空文本框事件
 
 ### 更新日志
+    2.0.5:demo增加子节点测试数据
     2.0.4:清空选择增加事件clearFun
     2.0.3:新增清空选择，clearable默认为true
     2.0.2:优化：默认clickParent=true,取消箭头图标点击事件使用input默认点击
