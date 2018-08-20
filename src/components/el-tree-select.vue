@@ -35,7 +35,7 @@
                 ref="popper"
                 class="elTreeSelectMenu"
                 v-show="visible">
-                <el-input
+                <el-input v-show="search"
                     v-model="searchKey"
                     :placeholder="placeholder"
                     size="small"
@@ -68,7 +68,7 @@
     /*---下拉框样式------*/
 .elTreeSelect > input{content:'';text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
 .elTreeSelect .selectInput > input{padding-left:5px;padding-right:5px;}
-.elTreeSelectMenu{z-index:9999!important;min-width:100px !important;padding:5px;}
+.elTreeSelectMenu{z-index:9999!important;padding:5px;}
 .elTreeSelectMenu .searchInput{padding:10px;width: 93%;}
 .elTreeSelectMenu .searchInput .el-button{min-width:auto;}
 .elTreeSelectMenu .el-tree .el-tree-node.is-current > .el-tree-node__content{background-color:rgba(52,184,225,0.5);}
@@ -120,11 +120,18 @@
         },
         directives: {Clickoutside},
         props: {
-            placeholder: String, // 搜索框默认文字
             value: String, // v-model
             disabled: Boolean,
             multiple: Boolean, // 是否多选
             renderContent: Function, // 是否给过滤数据
+            placeholder: String, // 搜索框默认文字
+            search: {
+                // 搜索框是否显示
+                type: Boolean,
+                default() {
+                    return true;
+                }
+            },
             remoteSearch: {
                 // 搜索，从本地还是远程请求,默认本地
                 type: Boolean,
@@ -269,6 +276,7 @@
                     this.label = data[this.props.label];
                     this.$emit('input', this.label);
                     this.$emit('nodeClick', data, node, tree);
+                    this.handleClose();
                 }
             },
             handleIconHide() {

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <elTreeselect v-model="title" clickParent placeholder="请输入搜索内容" :data="treeData" :props="props" @clearFun="clearFun">
+    <elTreeselect v-model="title"  clickParent placeholder="请输入搜索内容" :data="treeData" :props="props" @clearFun="clearFun">
     </elTreeselect>
   </div>
 </template>
