@@ -1,5 +1,5 @@
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
-
+(```)
 ### 属性：
 
 #### 特殊点(屏蔽el-select、el-tree的几个参数)：
@@ -24,20 +24,20 @@ treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到
 
 ######  事件:    
 
-####### select-clear
+###### select-clear
 select-clear 下拉框清空事件   this.$emit('select-clear');
 
-####### node-click
+###### node-click
 树点击,和el-tree参数一致:this.$emit('node-click', data, node, vm);
 
-####### searchFun  
+###### searchFun  
 如果是本地过滤：
 this.$refs.treeSelect.$refs.tree.filter(value);
 如果是请求后台：
 this.post(xxxx,response=>{
     this.$refs.treeSelect.updateFun(response.data);
 });
-
+(```)
 ### 更新日志
     3.0.0 全新api
 ### DEMO
@@ -54,6 +54,7 @@ this.post(xxxx,response=>{
 
 
 #### script
+(```)
 
 import ELTreeSelect from 'el-tree-select';
 export default {
@@ -90,7 +91,7 @@ export default {
 components: {ELTreeSelect}
 };
 
-
+(```)
 ## 安装
 
 npm install el-tree-select --save
