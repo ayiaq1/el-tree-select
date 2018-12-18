@@ -1,15 +1,15 @@
 'use strict';
-const path = require('path');
+// const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
 const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const env = require('../config/prod.env');
 const npm = require("../package.json");
@@ -39,22 +39,22 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   },
+    //   sourceMap: true
+    // }),
     // extract css into its own file
-    new ExtractTextPlugin({
-      // filename: utils.assetsPath('css/[name].[contenthash].css')
-      filename: 'el-tree-select.min.css'
-    }),
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    })
+    // new ExtractTextPlugin({
+    //   // filename: utils.assetsPath('css/[name].[contenthash].css')
+    //   filename: 'el-tree-select.min.css'
+    // }),
+    // new OptimizeCSSPlugin({
+    //   cssProcessorOptions: {
+    //     safe: true
+    //   }
+    // })
   ]
 });
 module.exports = webpackConfig;
