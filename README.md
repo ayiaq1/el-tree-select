@@ -1,7 +1,7 @@
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
 
 ###
-![Image text](https://github.com/ayiaq1/el-tree-select/raw/dev/DEMO.jpg)
+![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
 
 ```
 ### 属性：
