@@ -17,7 +17,7 @@
 :show-checkbox="selectParams.multiple"  使用下拉框参数multiple 判断是否对树进行多项 取消对el-tree的人为传参show-checkbox
 :node-key="propsValue"  自动获取treeParams.props.value
 :draggable="false"      屏蔽拖动
-
+```
 #### 支持的参数：
 ```
 #### el-select参数：
@@ -69,7 +69,7 @@ this.post(xxxx,response=>{
     1.4.5:修改webpack配置，打包css忽略z-index
     1.4.4:增加CSS样式
     1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
-    
+
 ### DEMO
 
 #### div
