@@ -2,7 +2,7 @@
 ## 目前已剥离组件可作为独立插件使用
 
 ###
-![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/demo.jpg)
+![Image text](https://github.com/ayiaq1/el-tree-select/raw/2.x/demo.jpg)
 
 #### 参数：
     // 如果启用了 isEdit 那么在 hide的时候 需要当前一行的 row.name = val
