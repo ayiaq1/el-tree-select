@@ -52,6 +52,7 @@ this.post(xxxx,response=>{
 });
 ```
 ### 更新日志
+    3.0.1 修复IE9以上兼容性
     3.0.0 全新api，支持el-tree,el-select相关参数
     2.0.6:增加搜索栏隐藏参数,从业务上考虑clickParent=true隐藏父级，展开搜索只在三角箭头点击
     2.0.5:demo增加子节点测试数据
