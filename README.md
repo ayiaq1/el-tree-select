@@ -19,7 +19,7 @@
 :draggable="false"      屏蔽拖动
 ```
 #### 支持的参数：
-```
+
 #### el-select参数：
 ```
 selectParams  :     支持el-select 相关参数
@@ -42,14 +42,18 @@ select-clear 下拉框清空事件   this.$emit('select-clear');
 ```
 树点击,和el-tree参数一致:this.$emit('node-click', data, node, vm);
 ```
-###### searchFun
+###### searchFun  参数: keywords
 ```
-如果是本地过滤：
-this.$refs.treeSelect.$refs.tree.filter(value);
-如果是请求后台：
-this.post(xxxx,response=>{
-    this.$refs.treeSelect.updateFun(response.data);
-});
+searchFun(value){
+    // 如果是本地过滤：
+    this.$refs.treeSelect.$refs.tree.filter(value);
+    // 如果是请求后台：
+    this.post(url,postobj:{
+        keywords:value
+    },response=>{
+        this.$refs.treeSelect.updateFun(response.data);
+    });
+}
 ```
 ### 更新日志
     3.0.1 修复IE9以上兼容性
