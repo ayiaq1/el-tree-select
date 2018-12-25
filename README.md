@@ -32,7 +32,7 @@ treeParams  :     支持el-tree 相关参数
 ```
 treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到treeParams参数内
 ```
-###  事件:    
+###  事件:
 
 ###### select-clear
 ```
@@ -56,6 +56,8 @@ searchFun(value){
 }
 ```
 ### 更新日志
+    3.0.3 增加disabled，打包压缩
+    3.0.2 增加容错判断
     3.0.1 修复IE9以上兼容性
     3.0.0 全新api，支持el-tree,el-select相关参数
     2.0.6:增加搜索栏隐藏参数,从业务上考虑clickParent=true隐藏父级，展开搜索只在三角箭头点击
