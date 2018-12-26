@@ -23,6 +23,9 @@
 #### el-select参数：
 ```
 selectParams  :     支持el-select 相关参数
+
+增加参数：
+selectParams.styles 对el-select设置style,类型:Object
 ```
 #### el-tree参数：
 ```
@@ -62,6 +65,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.6 增加对el-select设置style
     3.0.5 提取dom.js精简，缩小体积
     3.0.4 修复搜索框焦点隐藏弹出框问题
     3.0.3 增加disabled，打包压缩

@@ -1,7 +1,7 @@
 <template>
   <div class='el-tree-select'>
     <!-- 下拉文本 -->
-    <el-select class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @clear="_selectClearFun" @focus="_popoverShowFun">
+    <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @clear="_selectClearFun" @focus="_popoverShowFun">
     </el-select>
     <!-- 弹出框 -->
     <el-popover :disabled="disabled" ref="popover" :placement="placement" popper-class="el-tree-select-popper" :width="width" v-model="visible" trigger="click">
@@ -55,6 +55,7 @@ import { on, off } from '../utils/dom';
 export default {
   name: 'el-tree-select',
   props: {
+    styles: Object, // el-select样式
     value: [String, Array], // v-model
     disabled: {
       type: Boolean,
@@ -79,15 +80,13 @@ export default {
       }
     },
     treeParams: {
-      'data': {
-        // 树菜单数据
+      'data': { // 树菜单数据
         type: Array,
         default () {
           return [];
         }
       },
-      'props': {
-        // 树菜单 默认数据设置
+      'props': { // 树菜单 默认数据设置
         type: Object,
         default () {
           return {
@@ -158,6 +157,7 @@ export default {
     // 树过滤
     _filterFun(value, data, node) {
       if (!value) return true;
+      console.log(data[this.propsLabel], data[this.propsLabel].indexOf(value))
       return data[this.propsLabel].indexOf(value) !== -1;
     },
     // 树点击
@@ -226,6 +226,7 @@ export default {
     },
     // 本地过滤方法
     filterFun(val) {
+      console.log('val==>', val);
       this.$refs.tree.filter(val)
     }
   },

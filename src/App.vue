@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ELTreeSelect v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref='treeSelect' />
+    <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref='treeSelect' />
     <el-select multiple v-model="test" placeholder="请选择">
       <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId">
       </el-option>
@@ -11,7 +11,7 @@
 #app {
   display: flex;
   justify-content: space-between;
-  width: 700px;
+  width: 600px;
 }
 
 </style>
@@ -21,6 +21,9 @@ export default {
   name: 'App',
   data() {
     return {
+      styles: {
+        width: '300px'
+      },
       test: '',
       values: '3',
       selectParams: {
@@ -69,7 +72,7 @@ export default {
     _renderFun(h, { node, data, store }) {
       return (
         <span class="custom-tree-node">
-          <span>text-----{node.label}</span>
+          <span>{node.label}</span>
         </span>);
     }
   },
