@@ -47,6 +47,8 @@ select-clear 下拉框清空事件   this.$emit('select-clear');
 searchFun(value){
     // 如果是本地过滤：
     this.$refs.treeSelect.$refs.tree.filter(value);
+    // 可以直接访问方法，也可以拿到 $refs.tree
+    this.$refs.treeSelect.filterFun(val);
     // 如果是请求后台：
     this.post(url,postobj:{
         keywords:value
@@ -55,7 +57,12 @@ searchFun(value){
     });
 }
 ```
+###### filterFun  参数: 本地过滤树
+```
+this.$refs.treeSelect.filterFun(val);
+```
 ### 更新日志
+    3.0.4 修复搜索框焦点隐藏弹出框问题
     3.0.3 增加disabled，打包压缩
     3.0.2 增加容错判断
     3.0.1 修复IE9以上兼容性

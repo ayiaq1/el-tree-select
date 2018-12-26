@@ -9,7 +9,7 @@ const baseWebpackConfig = require('./webpack.base.conf');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const env = require('../config/prod.env');
 const npm = require("../package.json");
@@ -43,7 +43,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       compress: {
         warnings: false
       },
-      sourceMap: true
+      sourceMap: false
     }),
     // extract css into its own file
     // new ExtractTextPlugin({

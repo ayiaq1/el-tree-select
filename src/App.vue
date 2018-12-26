@@ -1,21 +1,27 @@
 <template>
   <div id="app">
-    <ELTreeSelect
-      v-model="values"
-      :selectParams="selectParams"
-      :treeParams="treeParams"
-      @searchFun="_searchFun"
-      @node-click="_nodeClickFun"
-      ref='treeSelect'
-    />
+    <ELTreeSelect v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref='treeSelect' />
+    <el-select multiple v-model="test" placeholder="请选择">
+      <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId">
+      </el-option>
+    </el-select>
   </div>
 </template>
+<style>
+#app {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+}
+
+</style>
 <script>
 import ELTreeSelect from './components/el-tree-select.vue';
 export default {
   name: 'App',
   data() {
     return {
+      test: '',
       values: '3',
       selectParams: {
         'clearable': true,
@@ -27,22 +33,24 @@ export default {
         'check-strictly': true,
         'render-content': this._renderFun,
         'data': [{
-          testId: '1', name: '哎哎哎',
-          children: [{ testId: '3', name: '啊啊啊啊' }]
-        },
-        {
-          testId: '2',
-          name: '发生的'
-        }],
+            testId: '1',
+            name: '哎哎哎',
+            children: [{ testId: '3', name: '啊啊啊啊' }]
+          },
+          {
+            testId: '2',
+            name: '发生的'
+          }
+        ],
         'props': {
           children: 'children',
           label: 'name',
-          value:'testId'
+          value: 'testId'
         }
       }
     }
   },
-  mounted() { },
+  mounted() {},
   methods: {
     // 树点击
     _nodeClickFun(data, node, vm) {
@@ -50,8 +58,10 @@ export default {
     },
     // 树过滤
     _searchFun(value) {
+      console.log(searchFun)
       // 自行判断 是走后台查询，还是前端过滤
-      this.$refs.treeSelect.$refs.tree.filter(value);
+      // this.$refs.treeSelect.$refs.tree.filter(value);
+      this.$refs.treeSelect.filterFun(value);
       // 后台查询
       // this.$refs.treeSelect.updateFun(treeData);
     },

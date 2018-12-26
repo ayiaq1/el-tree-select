@@ -1,13 +1,13 @@
 <template>
   <div class='el-tree-select'>
     <!-- 下拉文本 -->
-    <el-select v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @clear="_selectClearFun" @blur="visible=false" @focus="_popoverShowFun">
+    <el-select class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @clear="_selectClearFun" @focus="_popoverShowFun">
     </el-select>
     <!-- 弹出框 -->
     <el-popover :disabled="disabled" ref="popover" :placement="placement" popper-class="el-tree-select-popper" :width="width" v-model="visible" trigger="click">
       <!-- 是否显示搜索框 -->
       <el-input v-if="treeParams.filterable" v-model="keywords" size="mini" class="input-with-select mb10" @change="_searchFun">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="_searchFun"></el-button>
       </el-input>
       <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
         <!-- 树列表 -->
@@ -51,6 +51,7 @@
 
 </style>
 <script>
+import { on, off } from 'element-ui/lib/utils/dom';
 export default {
   name: 'el-tree-select',
   props: {
@@ -110,7 +111,7 @@ export default {
       labels: multiple ? [] : '', // 存储名称，用于下拉框显示内容
       ids: [], // 存储id
       selectNodes: [], // 选中数据
-      visible: false,
+      visible: false, // popover v-model
       width: 150
     };
   },
@@ -128,6 +129,7 @@ export default {
   },
   mounted() {
     this._updateH();
+    on(document, 'mouseup', this._popoverHideFun);
   },
   methods: {
     // 输入文本框输入内容抛出
@@ -209,12 +211,28 @@ export default {
         this._updateH();
       }
     },
+    // 判断是否隐藏弹出框
+    _popoverHideFun(e) {
+      let isInter = e.path.some(list => {
+        return list.className && list.className.indexOf('el-tree-select') !== -1;
+      });
+      if (!isInter) {
+        this.visible = false;
+      }
+    },
     // 树列表更新数据
     treeDataUpdateFun(data) {
       this.data = data;
+    },
+    // 本地过滤方法
+    filterFun(val) {
+      this.$refs.tree.filter(val)
     }
   },
-  components: {}
+  components: {},
+  beforeDestroy() {
+    off(document, 'mouseup', this._popoverHideFun);
+  }
 };
 
 </script>
