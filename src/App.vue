@@ -58,7 +58,7 @@ export default {
     },
     // 树过滤
     _searchFun(value) {
-      console.log(searchFun)
+      console.log(value, '<--_searchFun')
       // 自行判断 是走后台查询，还是前端过滤
       // this.$refs.treeSelect.$refs.tree.filter(value);
       this.$refs.treeSelect.filterFun(value);

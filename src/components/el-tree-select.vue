@@ -7,7 +7,7 @@
     <el-popover :disabled="disabled" ref="popover" :placement="placement" popper-class="el-tree-select-popper" :width="width" v-model="visible" trigger="click">
       <!-- 是否显示搜索框 -->
       <el-input v-if="treeParams.filterable" v-model="keywords" size="mini" class="input-with-select mb10" @change="_searchFun">
-        <el-button slot="append" icon="el-icon-search" @click="_searchFun"></el-button>
+        <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
       <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
         <!-- 树列表 -->
@@ -51,7 +51,7 @@
 
 </style>
 <script>
-import { on, off } from 'element-ui/lib/utils/dom';
+import { on, off } from '../utils/dom';
 export default {
   name: 'el-tree-select',
   props: {

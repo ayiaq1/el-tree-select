@@ -62,6 +62,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.5 提取dom.js精简，缩小体积
     3.0.4 修复搜索框焦点隐藏弹出框问题
     3.0.3 增加disabled，打包压缩
     3.0.2 增加容错判断
