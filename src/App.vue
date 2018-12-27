@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref='treeSelect' />
-    <el-select multiple v-model="test" placeholder="请选择">
+    <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
       <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId">
       </el-option>
     </el-select>
@@ -55,6 +55,10 @@ export default {
   },
   mounted() {},
   methods: {
+    // 下拉框修改
+    _selectChange(val) {
+      console.log(val, '<-select change');
+    },
     // 树点击
     _nodeClickFun(data, node, vm) {
       console.log('this _nodeClickFun', this.values, data, node);

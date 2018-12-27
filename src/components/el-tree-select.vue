@@ -117,6 +117,15 @@ export default {
   watch: {
     'ids': function(val) {
       this._setSelectNodeFun();
+    },
+    'value': function(val) {
+      if (this.ids !== val) {
+        if (this.selectParams.multiple) {
+          this.ids = this.val;
+        } else {
+          this.ids = val === '' ? [] : [val];
+        }
+      }
     }
   },
   created() {
@@ -138,12 +147,15 @@ export default {
     // 根据id筛选当前树名称，以及选中树列表
     _setSelectNodeFun() {
       const el = this.$refs.tree;
+      const { multiple } = this.selectParams;
       // 长度为0，清空选择
       if (this.ids.length === 0 || this.data.length === 0) {
+        this.labels = multiple ? [] : '';
+        el.setCurrentKey(null);
         return;
       }
       el.setCurrentKey(this.ids);
-      if (this.selectParams.multiple) {
+      if (multiple) {
         el.setCheckedKeys(this.ids);
         this.labels = el.getCheckedNodes().map(item => item[this.propsLabel]) || [];
       } else {
@@ -157,7 +169,6 @@ export default {
     // 树过滤
     _filterFun(value, data, node) {
       if (!value) return true;
-      console.log(data[this.propsLabel], data[this.propsLabel].indexOf(value))
       return data[this.propsLabel].indexOf(value) !== -1;
     },
     // 树点击
@@ -226,7 +237,6 @@ export default {
     },
     // 本地过滤方法
     filterFun(val) {
-      console.log('val==>', val);
       this.$refs.tree.filter(val)
     }
   },
