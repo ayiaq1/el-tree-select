@@ -45,7 +45,7 @@ select-clear 下拉框清空事件   this.$emit('select-clear');
 ```
 树点击,和el-tree参数一致:this.$emit('node-click', data, node, vm);
 ```
-###### node-click
+###### treeDataUpdateFun
 ```
 treeDataUpdateFun 树更新数据
 
