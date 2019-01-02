@@ -73,6 +73,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.8 修复treeDataUpdateFun更新数据时，单选没有赋值问题
     3.0.7 修复v-model问题
     3.0.6 增加对el-select设置style
     3.0.5 提取dom.js精简，缩小体积

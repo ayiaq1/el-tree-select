@@ -154,7 +154,7 @@ export default {
         el.setCurrentKey(null);
         return;
       }
-      el.setCurrentKey(this.ids);
+      el.setCurrentKey(this.ids[0]);
       if (multiple) {
         el.setCheckedKeys(this.ids);
         this.labels = el.getCheckedNodes().map(item => item[this.propsLabel]) || [];
@@ -190,14 +190,14 @@ export default {
     _selectClearFun() {
       const { multiple } = this.selectParams;
       const el = this.$refs.tree;
+      this.ids = [];
       if (multiple) {
         this.labels = [];
-        el.setCheckedKeys(this.ids);
+        el.setCheckedKeys([]);
       } else {
         this.labels = '';
+        el.setCurrentKey(null);
       }
-      this.ids = [];
-      el.setCurrentKey(this.ids);
       this.$emit('input', this.labels);
       this.$emit('select-clear');
     },
@@ -234,6 +234,10 @@ export default {
     // 树列表更新数据
     treeDataUpdateFun(data) {
       this.data = data;
+      // 数据更新完成之后，判断是否回显内容
+      setTimeout(() => {
+        this._setSelectNodeFun();
+      }, 1000);
     },
     // 本地过滤方法
     filterFun(val) {

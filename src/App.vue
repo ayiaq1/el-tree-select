@@ -25,7 +25,7 @@ export default {
         width: '300px'
       },
       test: '',
-      values: '3',
+      values: '3333',
       selectParams: {
         'clearable': true,
         'placeholder': '请输入内容'
@@ -37,8 +37,7 @@ export default {
         'render-content': this._renderFun,
         'data': [{
             testId: '1',
-            name: '哎哎哎',
-            children: [{ testId: '3', name: '啊啊啊啊' }]
+            name: '哎哎哎'
           },
           {
             testId: '2',
@@ -53,7 +52,23 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    let data = [{
+        testId: '1',
+        name: '哎哎哎',
+        children: [{
+          testId: '3333',
+          name: '最新添加内容'
+        }]
+      },
+      {
+        testId: '2',
+        name: '发生的'
+      }
+    ];
+    this.treeParams.data = data;
+    this.$refs.treeSelect.treeDataUpdateFun(data);
+  },
   methods: {
     // 下拉框修改
     _selectChange(val) {
