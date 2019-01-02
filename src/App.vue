@@ -70,7 +70,7 @@ export default {
       // this.$refs.treeSelect.$refs.tree.filter(value);
       this.$refs.treeSelect.filterFun(value);
       // 后台查询
-      // this.$refs.treeSelect.updateFun(treeData);
+      // this.$refs.treeSelect.treeDataUpdateFun(treeData);
     },
     // 自定义render
     _renderFun(h, { node, data, store }) {
