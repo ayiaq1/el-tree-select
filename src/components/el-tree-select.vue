@@ -1,8 +1,14 @@
+<!--
+ * @moduleName: 下拉树组件
+ * @Author: dawdler
+ * @Date: 2018-12-19 14:03:03
+ * @LastModifiedBy: dawdler
+ * @LastEditTime: 2019-01-09 16:03:15
+ -->
 <template>
-  <div class='el-tree-select'>
+  <div class="el-tree-select">
     <!-- 下拉文本 -->
-    <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @clear="_selectClearFun" @focus="_popoverShowFun">
-    </el-select>
+    <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" @clear="_selectClearFun" @focus="_popoverShowFun"></el-select>
     <!-- 弹出框 -->
     <el-popover :disabled="disabled" ref="popover" :placement="placement" popper-class="el-tree-select-popper" :width="width" v-model="visible" trigger="click">
       <!-- 是否显示搜索框 -->
@@ -11,7 +17,7 @@
       </el-input>
       <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
         <!-- 树列表 -->
-        <el-tree ref='tree' v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids[0]||null" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" @node-click="_treeNodeClickFun" @check="__treeCheckClickFun"></el-tree>
+        <el-tree ref="tree" v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids[0]||''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" @node-click="_treeNodeClickFun" @check="__treeCheckClickFun"></el-tree>
         <!-- 暂无数据 -->
         <div v-if="data.length===0" class="no-data">暂无数据</div>
       </el-scrollbar>
@@ -33,7 +39,7 @@
   min-width: 25px !important;
 }
 
-.el-tree-select-popper[x-placement^="bottom"] {
+.el-tree-select-popper[x-placement^='bottom'] {
   margin-top: 5px;
 }
 
@@ -48,10 +54,10 @@
   color: #cccccc;
   text-align: center;
 }
-
 </style>
 <script>
 import { on, off } from '../utils/dom';
+import { each } from '../utils/utils';
 export default {
   name: 'el-tree-select',
   props: {
@@ -59,36 +65,40 @@ export default {
     value: [String, Array], // v-model
     disabled: {
       type: Boolean,
-      default () {
-        return false
+      default() {
+        return false;
       }
     },
-    placement: { // 弹出框位置
+    placement: {
+      // 弹出框位置
       type: String,
-      default () {
-        return 'bottom'
+      default() {
+        return 'bottom';
       }
     },
     selectParams: {
       disabled: Boolean,
       placeholder: String, // 搜索框默认文字
-      multiple: { // 是否多选
+      multiple: {
+        // 是否多选
         type: Boolean,
-        default () {
+        default() {
           return false;
         }
       }
     },
     treeParams: {
-      'data': { // 树菜单数据
+      data: {
+        // 树菜单数据
         type: Array,
-        default () {
+        default() {
           return [];
         }
       },
-      'props': { // 树菜单 默认数据设置
+      props: {
+        // 树菜单 默认数据设置
         type: Object,
-        default () {
+        default() {
           return {
             children: 'children',
             label: 'name',
@@ -115,13 +125,15 @@ export default {
     };
   },
   watch: {
-    'ids': function(val) {
-      this._setSelectNodeFun();
+    ids: function(val) {
+      if (val !== undefined) {
+        this._setSelectNodeFun(val);
+      }
     },
-    'value': function(val) {
+    value: function(val) {
       if (this.ids !== val) {
         if (this.selectParams.multiple) {
-          this.ids = this.val;
+          this.ids = val;
         } else {
           this.ids = val === '' ? [] : [val];
         }
@@ -145,20 +157,24 @@ export default {
       this.$emit('searchFun', this.keywords);
     },
     // 根据id筛选当前树名称，以及选中树列表
-    _setSelectNodeFun() {
+    _setSelectNodeFun(ids) {
       const el = this.$refs.tree;
       const { multiple } = this.selectParams;
       // 长度为0，清空选择
-      if (this.ids.length === 0 || this.data.length === 0) {
+      if (ids.length === 0 || this.data.length === 0) {
         this.labels = multiple ? [] : '';
-        el.setCurrentKey(null);
+        if (multiple) {
+          el.setCheckedKeys([]);
+        } else {
+          el.setCurrentKey('');
+        }
         return;
       }
-      el.setCurrentKey(this.ids[0]);
       if (multiple) {
-        el.setCheckedKeys(this.ids);
+        el.setCheckedKeys(ids);
         this.labels = el.getCheckedNodes().map(item => item[this.propsLabel]) || [];
       } else {
+        el.setCurrentKey(ids[0]);
         if (el.getCurrentNode()) {
           this.labels = el.getCurrentNode()[this.propsLabel];
         } else {
@@ -184,21 +200,23 @@ export default {
       node.checkedNodes.forEach(item => {
         this.ids.push(item[this.propsValue]);
       });
+      this.$emit('check', data, node, vm);
       this._emitFun();
+    },
+    // 下拉框移除tag时触发
+    _selectRemoveTag(tag) {
+      each(this.data, item => {
+        if (item[this.propsLabel] === tag) {
+          const value = item[this.propsValue];
+          this.ids = this.ids.filter(id => id !== value);
+        }
+      });
+      this.$refs.tree.setCheckedKeys(this.ids);
     },
     // 下拉框清空数据
     _selectClearFun() {
-      const { multiple } = this.selectParams;
-      const el = this.$refs.tree;
       this.ids = [];
-      if (multiple) {
-        this.labels = [];
-        el.setCheckedKeys([]);
-      } else {
-        this.labels = '';
-        el.setCurrentKey(null);
-      }
-      this.$emit('input', this.labels);
+      this.$emit('input', []);
       this.$emit('select-clear');
     },
     // 判断类型，抛出当前选中id
@@ -236,12 +254,12 @@ export default {
       this.data = data;
       // 数据更新完成之后，判断是否回显内容
       setTimeout(() => {
-        this._setSelectNodeFun();
-      }, 1000);
+        this._setSelectNodeFun(this.ids);
+      }, 300);
     },
     // 本地过滤方法
     filterFun(val) {
-      this.$refs.tree.filter(val)
+      this.$refs.tree.filter(val);
     }
   },
   components: {},
@@ -249,5 +267,4 @@ export default {
     off(document, 'mouseup', this._popoverHideFun);
   }
 };
-
 </script>

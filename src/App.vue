@@ -1,9 +1,15 @@
+<!--
+ * @moduleName: 
+ * @Author: dawdler
+ * @Date: 2018-12-19 14:03:03
+ * @LastModifiedBy: dawdler
+ * @LastEditTime: 2019-01-09 15:02:56
+ -->
 <template>
   <div id="app">
-    <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref='treeSelect' />
+    <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
     <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
-      <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId">
-      </el-option>
+      <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
     </el-select>
   </div>
 </template>
@@ -13,7 +19,6 @@
   justify-content: space-between;
   width: 600px;
 }
-
 </style>
 <script>
 import ELTreeSelect from './components/el-tree-select.vue';
@@ -25,44 +30,64 @@ export default {
         width: '300px'
       },
       test: '',
-      values: '3333',
+      values: ['3333'],
       selectParams: {
-        'clearable': true,
-        'placeholder': '请输入内容'
+        clearable: true,
+        multiple: true,
+        placeholder: '请输入内容'
       },
       treeParams: {
         'default-expand-all': true,
-        'filterable': true,
+        filterable: true,
         'check-strictly': true,
         'render-content': this._renderFun,
-        'data': [{
-            testId: '1',
-            name: '哎哎哎'
-          },
-          {
-            testId: '2',
-            name: '发生的'
-          }
-        ],
-        'props': {
+        data: [],
+        props: {
           children: 'children',
           label: 'name',
           value: 'testId'
         }
       }
-    }
+    };
   },
   mounted() {
-    let data = [{
+    let data = [
+      {
         testId: '1',
         name: '哎哎哎',
-        children: [{
-          testId: '3333',
-          name: '最新添加内容'
-        }]
+        children: [
+          {
+            testId: '3333',
+            name: '最新添加内容'
+          }
+        ]
       },
       {
         testId: '2',
+        name: '发生的'
+      },
+      {
+        testId: '3',
+        name: '哎哎哎'
+      },
+      {
+        testId: '4',
+        name: '发生的'
+      },
+      {
+        testId: '5',
+        name: '哎哎哎'
+      },
+      {
+        testId: '6',
+        name: '发生的'
+      },
+      {
+        testId: '7',
+        name: '发生的'
+      },
+      {
+        testId: '8',
         name: '发生的'
       }
     ];
@@ -80,7 +105,7 @@ export default {
     },
     // 树过滤
     _searchFun(value) {
-      console.log(value, '<--_searchFun')
+      console.log(value, '<--_searchFun');
       // 自行判断 是走后台查询，还是前端过滤
       // this.$refs.treeSelect.$refs.tree.filter(value);
       this.$refs.treeSelect.filterFun(value);
@@ -92,10 +117,10 @@ export default {
       return (
         <span class="custom-tree-node">
           <span>{node.label}</span>
-        </span>);
+        </span>
+      );
     }
   },
   components: { ELTreeSelect }
 };
-
 </script>

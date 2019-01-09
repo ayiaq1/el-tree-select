@@ -1,3 +1,10 @@
+<!--
+ * @moduleName: 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
+ * @Author: dawdler
+ * @Date: 2018-12-19 14:03:03
+ * @LastModifiedBy: dawdler
+ * @LastEditTime: 2019-01-09 16:05:14
+ -->
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
 
 ###
@@ -43,7 +50,11 @@ select-clear 下拉框清空事件   this.$emit('select-clear');
 ```
 ###### node-click
 ```
-树点击,和el-tree参数一致:this.$emit('node-click', data, node, vm);
+树点击,和el-tree参数一致: this.$emit('node-click', data, node, vm);
+```
+###### check
+```
+勾选触发,和el-tree参数一致: this.$emit('check',data, node, vm);
 ```
 ###### treeDataUpdateFun
 ```
@@ -73,6 +84,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.9 增加树check方法，修复select多选移除时树没有联动取消勾选问题
     3.0.8 修复treeDataUpdateFun更新数据时，单选没有赋值问题
     3.0.7 修复v-model问题
     3.0.6 增加对el-select设置style
