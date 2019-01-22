@@ -75,7 +75,7 @@ searchFun(value){
     this.post(url,postobj:{
         keywords:value
     },response=>{
-        this.$refs.treeSelect.updateFun(response.data);
+        this.$refs.treeSelect.treeDataUpdateFun(response.data);
     });
 }
 ```
