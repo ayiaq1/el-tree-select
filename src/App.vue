@@ -30,10 +30,9 @@ export default {
         width: '300px'
       },
       test: '',
-      values: ['3333'],
+      values: '3333',
       selectParams: {
         clearable: true,
-        multiple: true,
         placeholder: '请输入内容'
       },
       treeParams: {

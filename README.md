@@ -84,6 +84,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.10 修复单选状态下清空报错问题，优化逻辑判断
     3.0.9 增加树check方法，修复select多选移除时树没有联动取消勾选问题
     3.0.8 修复treeDataUpdateFun更新数据时，单选没有赋值问题
     3.0.7 修复v-model问题

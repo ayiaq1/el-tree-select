@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-01-09 16:03:15
+ * @LastEditTime: 2019-01-31 19:47:40
  -->
 <template>
   <div class="el-tree-select">
@@ -216,17 +216,14 @@ export default {
     // 下拉框清空数据
     _selectClearFun() {
       this.ids = [];
-      this.$emit('input', []);
+      const { multiple } = this.selectParams;
+      this.$emit('input', multiple ? [] : '');
       this.$emit('select-clear');
     },
     // 判断类型，抛出当前选中id
     _emitFun() {
       const { multiple } = this.selectParams;
-      if (multiple) {
-        this.$emit('input', this.ids);
-      } else {
-        this.$emit('input', this.ids[0]);
-      }
+      this.$emit('input', multiple ? this.ids : this.ids[0]);
     },
     // 更新宽度
     _updateH() {
