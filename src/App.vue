@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-01-09 15:02:56
+ * @LastEditTime: 2019-02-16 14:11:12
  -->
 <template>
   <div id="app">
@@ -30,14 +30,15 @@ export default {
         width: '300px'
       },
       test: '',
-      values: '3333',
+      values: ['3333'],
       selectParams: {
+        multiple: true,
         clearable: true,
         placeholder: '请输入内容'
       },
       treeParams: {
-        'default-expand-all': true,
         filterable: true,
+        'default-expand-all': true,
         'check-strictly': true,
         'render-content': this._renderFun,
         data: [],
@@ -53,41 +54,33 @@ export default {
     let data = [
       {
         testId: '1',
-        name: '哎哎哎',
+        name: '节点1',
         children: [
           {
             testId: '3333',
-            name: '最新添加内容'
+            name: '子节点'
           }
         ]
       },
       {
         testId: '2',
-        name: '发生的'
+        name: '节点2'
       },
       {
         testId: '3',
-        name: '哎哎哎'
+        name: '节点3'
       },
       {
         testId: '4',
-        name: '发生的'
+        name: '节点4'
       },
       {
         testId: '5',
-        name: '哎哎哎'
+        name: '节点5'
       },
       {
         testId: '6',
-        name: '发生的'
-      },
-      {
-        testId: '7',
-        name: '发生的'
-      },
-      {
-        testId: '8',
-        name: '发生的'
+        name: '节点6'
       }
     ];
     this.treeParams.data = data;
@@ -114,7 +107,7 @@ export default {
     // 自定义render
     _renderFun(h, { node, data, store }) {
       return (
-        <span class="custom-tree-node">
+        <span class='custom-tree-node'>
           <span>{node.label}</span>
         </span>
       );
