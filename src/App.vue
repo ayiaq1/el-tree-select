@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-02-16 14:11:12
+ * @LastEditTime: 2019-02-19 13:48:54
  -->
 <template>
   <div id="app">
@@ -43,7 +43,7 @@ export default {
         'render-content': this._renderFun,
         data: [],
         props: {
-          children: 'children',
+          children: 'child',
           label: 'name',
           value: 'testId'
         }
@@ -55,7 +55,7 @@ export default {
       {
         testId: '1',
         name: '节点1',
-        children: [
+        child: [
           {
             testId: '3333',
             name: '子节点'

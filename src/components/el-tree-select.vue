@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-02-16 14:11:15
+ * @LastEditTime: 2019-02-19 13:51:26
  -->
 <template>
   <div class="el-tree-select">
@@ -115,6 +115,7 @@ export default {
     return {
       propsValue: props.value || 'flowId',
       propsLabel: props.label || 'name',
+      propsChildren: props.children || 'children',
       data: [...data],
       keywords: '',
       labels: multiple ? [] : '', // 存储名称，用于下拉框显示内容
@@ -205,12 +206,17 @@ export default {
     },
     // 下拉框移除tag时触发
     _selectRemoveTag(tag) {
-      each(this.data, item => {
-        if (item[this.propsLabel] === tag) {
-          const value = item[this.propsValue];
-          this.ids = this.ids.filter(id => id !== value);
-        }
-      });
+      const { data, propsValue, propsLabel, propsChildren } = this;
+      each(
+        data,
+        item => {
+          if (item[propsLabel] === tag) {
+            const value = item[propsValue];
+            this.ids = this.ids.filter(id => id !== value);
+          }
+        },
+        propsChildren
+      );
       this.$refs.tree.setCheckedKeys(this.ids);
     },
     // 下拉框清空数据

@@ -1,17 +1,10 @@
 /*
- * @moduleName:
+ * @moduleName:通用工具类
  * @Author: dawdler
  * @Date: 2019-01-09 15:30:18
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-01-09 15:31:50
+ * @LastEditTime: 2019-02-19 13:50:21
  */
-/**
- * @Author      weiberZeng
- * @DateTime    2017-06-21
- * @lastTime    2017-06-021
- * @description 通用工具类
- */
-
 export default {
   getTreeData,
   each

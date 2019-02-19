@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-01-09 16:05:14
+ * @LastEditTime: 2019-02-19 13:59:40
  -->
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
 
@@ -84,6 +84,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.11 修复子节点名称不为children时，tag勾选联动问题
     3.0.10 修复单选状态下清空报错问题，优化逻辑判断
     3.0.9 增加树check方法，修复select多选移除时树没有联动取消勾选问题
     3.0.8 修复treeDataUpdateFun更新数据时，单选没有赋值问题
