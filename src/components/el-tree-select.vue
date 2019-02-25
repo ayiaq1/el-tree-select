@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-02-19 13:51:26
+ * @LastEditTime: 2019-02-25 10:38:46
  -->
 <template>
   <div class="el-tree-select">
@@ -239,9 +239,7 @@ export default {
     },
     // 显示弹出框的时候容错，查看是否和el宽度一致
     _popoverShowFun() {
-      if (this.width === 0) {
         this._updateH();
-      }
     },
     // 判断是否隐藏弹出框
     _popoverHideFun(e) {
