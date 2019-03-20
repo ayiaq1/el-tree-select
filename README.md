@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-02-25 10:39:28
+ * @LastEditTime: 2019-03-20 18:03:59
  -->
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
 
@@ -84,6 +84,11 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.13 
+        1.增加判断multiple,如果多选，点击父级不关闭弹出框
+        2.修复点击节点没有切换多选问题
+        3.修复多选时下拉框没有更新位置问题
+        4.优化代码
     3.0.12 修复文本框修改宽度之后，下拉框不一致
     3.0.11 修复子节点名称不为children时，tag勾选联动问题
     3.0.10 修复单选状态下清空报错问题，优化逻辑判断
@@ -114,56 +119,119 @@ this.$refs.treeSelect.filterFun(val);
     1.4.4:增加CSS样式
     1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
 
-### DEMO
+### DEMO (App.vue)
 
-#### div
-```
-    <ELTreeSelect
-        ref="treeSelect"
-        v-model="ids"
-        :selectParams="selectParams"
-        :treeParams="elTreeParams"
-        @node-click="fun"
-        @select-clear="fun"
-        @searchFun="fun"
-    />
-```
-#### script
-```
-import ELTreeSelect from 'el-tree-select';
+<template>
+    <div id="app">
+        <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
+        <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
+            <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
+        </el-select>
+    </div>
+</template>
+<style>
+#app {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+}
+</style>
+<script>
+import ELTreeSelect from './components/el-tree-select.vue';
 export default {
+    name: 'App',
     data() {
         return {
-            values: ['3'],
+            styles: {
+                width: '300px'
+            },
+            test: '',
+            values: ['3333'],
             selectParams: {
-                'multiple': true,
-                'clearable': true,
-                'placeholder': '请输入内容'
+                multiple: true,
+                clearable: true,
+                placeholder: '请输入内容'
             },
             treeParams: {
+                filterable: true,
                 'default-expand-all': true,
-                'filterable': true,
-                'check-strictly': true,
+                'expand-on-click-node': false,
                 'render-content': this._renderFun,
-                'data': [{
-                    flowId: '1', name: '哎哎哎',
-                    children: [{ flowId: '3', name: '啊啊啊啊' }]
-                },
-                {
-                    flowId: '2',
-                    name: '发生的'
-                }],
-                'props': {
-                    children: 'children',
+                data: [],
+                props: {
+                    children: 'child',
                     label: 'name',
-                    value: 'flowId'
+                    value: 'testId'
                 }
             }
+        };
+    },
+    mounted() {
+        let data = [
+            {
+                testId: '1',
+                name: '节点1',
+                child: [
+                    {
+                        testId: '3333',
+                        name: '子节点'
+                    }
+                ]
+            },
+            {
+                testId: '2',
+                name: '节点2'
+            },
+            {
+                testId: '3',
+                name: '节点3'
+            },
+            {
+                testId: '4',
+                name: '节点4'
+            },
+            {
+                testId: '5',
+                name: '节点5'
+            },
+            {
+                testId: '6',
+                name: '节点6'
+            }
+        ];
+        this.treeParams.data = data;
+        this.$refs.treeSelect.treeDataUpdateFun(data);
+    },
+    methods: {
+        // 下拉框修改
+        _selectChange(val) {
+            console.log(val, '<-select change');
+        },
+        // 树点击
+        _nodeClickFun(data, node, vm) {
+            console.log('this _nodeClickFun', this.values, data, node);
+        },
+        // 树过滤
+        _searchFun(value) {
+            console.log(value, '<--_searchFun');
+            // 自行判断 是走后台查询，还是前端过滤
+            // this.$refs.treeSelect.$refs.tree.filter(value);
+            this.$refs.treeSelect.filterFun(value);
+            // 后台查询
+            // this.$refs.treeSelect.treeDataUpdateFun(treeData);
+        },
+        // 自定义render
+        _renderFun(h, { node, data, store }) {
+            return (
+                <span class='custom-tree-node'>
+                    <span>{node.label}</span>
+                </span>
+            );
         }
     },
-},
-components: {ELTreeSelect}
+    components: { ELTreeSelect }
 };
+</script>
 ```
 ## 安装
 
