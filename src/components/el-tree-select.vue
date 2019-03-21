@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 10:58:12
+ * @LastEditTime: 2019-03-21 16:44:30
  -->
 <template>
     <div class="el-tree-select">
@@ -201,7 +201,11 @@ export default {
         _treeNodeClickFun(data, node, vm) {
             const { multiple } = this.selectParams;
             const { clickParent } = this.treeParams;
-            const { propsValue, propsChildren,propsDisabled } = this;
+            const { propsValue, propsChildren, propsDisabled } = this;
+            if (data[propsDisabled]) {
+                // 禁用
+                return;
+            }
             if (node.checked) {
                 const value = data[this.propsValue];
                 this.ids = this.ids.filter(id => id !== value);
@@ -223,10 +227,6 @@ export default {
                         this.visible = false;
                     }
                 } else {
-                    if(data[propsDisabled]){
-                        // 禁用，阻止继续派发
-                        return false;
-                    }
                     this.ids.push(data[propsValue]);
                 }
             }

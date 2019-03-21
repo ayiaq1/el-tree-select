@@ -112,7 +112,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
-
+    3.0.16 修复disabled还能点击的问题
     3.0.15 增加disabled参数判断
     3.0.15 增加treeParams.clickParent参数,默认false,只允许点击子级关闭弹出框
     3.0.13
