@@ -3,64 +3,83 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 10:03:39
+ * @LastEditTime: 2019-03-21 11:04:28
  -->
-## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
+
+## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
 
 ###
+
 ![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
 
 ### API：
 
-#### 特殊点(屏蔽el-select、el-tree的几个参数)：
+#### 特殊点(屏蔽 el-select、el-tree 的几个参数)：
 
-##### el-select取消参数:
+##### el-select 取消参数:
+
 ```
 :popper-append-to-body="false" 设定下拉框的弹出框隐藏
 :filterable="false"            搜索从弹出框里面执行
 ```
-##### el-tree取消参数：
+
+##### el-tree 取消参数：
+
 ```
 :show-checkbox="selectParams.multiple"  使用下拉框参数multiple 判断是否对树进行多项 取消对el-tree的人为传参show-checkbox
 :node-key="propsValue"  自动获取treeParams.props.value
 :draggable="false"      屏蔽拖动
 ```
+
 #### 支持的参数：
 
-#### el-select参数：
+#### el-select 参数：
+
 ```
 selectParams  :     支持el-select 相关参数
 
 #### styles参数：
 styles 对el-select设置style,类型:Object
 ```
-#### el-tree参数：
+
+#### el-tree 参数：
+
 ```
 treeParams  :     支持el-tree 相关参数
 增加：'clickParent'
-treeParams.clickParent 类型：Boolean 
+treeParams.clickParent 类型：Boolean 默认：false
 在selectParams.multiple=false单选情况下点击节点，判断是否关闭弹出框
 clickParent: true 允许点击父级关闭弹出框 false 只能点击子级关闭弹出框
 ```
+
 #### 搜索框参数：
+
 ```
 treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到treeParams参数内
 ```
-###  事件:
+
+### 事件:
 
 ###### select-clear
+
 ```
 select-clear 下拉框清空事件   this.$emit('select-clear');
 ```
+
 ###### node-click
+
 ```
 树点击,和el-tree参数一致: this.$emit('node-click', data, node, vm);
 ```
+
 ###### check
+
 ```
 勾选触发,和el-tree参数一致: this.$emit('check',data, node, vm);
 ```
+
 ###### treeDataUpdateFun
+
 ```
 treeDataUpdateFun 树更新数据
 
@@ -68,7 +87,9 @@ this.post(url,postobj,response=>{
     this.$refs.treeSelect.treeDataUpdateFun(response.data);
 });
 ```
-###### searchFun  参数: keywords
+
+###### searchFun 参数: keywords
+
 ```
 searchFun(value){
     // 如果是本地过滤：
@@ -83,13 +104,18 @@ searchFun(value){
     });
 }
 ```
-###### filterFun  参数: 本地过滤树
+
+###### filterFun 参数: 本地过滤树
+
 ```
 this.$refs.treeSelect.filterFun(val);
 ```
+
 ### 更新日志
-    3.0.14 增加treeParams.clickParent参数
-    3.0.13 
+
+    3.0.15 增加disabled参数判断
+    3.0.15 增加treeParams.clickParent参数,默认false,只允许点击子级关闭弹出框
+    3.0.13
         1.增加判断multiple,如果多选，点击父级不关闭弹出框
         2.修复点击节点没有切换多选问题
         3.修复多选时下拉框没有更新位置问题
@@ -126,6 +152,7 @@ this.$refs.treeSelect.filterFun(val);
 
 ### DEMO (App.vue)
 
+```
 <template>
     <div id="app">
         <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
@@ -151,14 +178,16 @@ export default {
                 width: '300px'
             },
             test: '',
-            values: ['3333'],
+            values: ['11111'],
             selectParams: {
                 multiple: true,
                 clearable: true,
                 placeholder: '请输入内容'
             },
             treeParams: {
+                clickParent: false,
                 filterable: true,
+                'check-strictly': true,
                 'default-expand-all': true,
                 'expand-on-click-node': false,
                 'render-content': this._renderFun,
@@ -166,6 +195,7 @@ export default {
                 props: {
                     children: 'child',
                     label: 'name',
+                    disabled: 'disabled',
                     value: 'testId'
                 }
             }
@@ -176,16 +206,24 @@ export default {
             {
                 testId: '1',
                 name: '节点1',
+                disabled: true,
                 child: [
                     {
-                        testId: '3333',
+                        testId: '11111',
                         name: '子节点'
                     }
                 ]
             },
             {
                 testId: '2',
-                name: '节点2'
+                name: '节点2',
+                child: [
+                    {
+                        testId: '222222',
+                        disabled: true,
+                        name: '子节点'
+                    }
+                ]
             },
             {
                 testId: '3',
@@ -237,12 +275,17 @@ export default {
     components: { ELTreeSelect }
 };
 </script>
+
 ```
+
 ## 安装
 
 npm install el-tree-select --save
 
-## git地址
+## git 地址
 
 https://github.com/ayiaq1/el-tree-select
 
+```
+
+```

@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 10:00:56
+ * @LastEditTime: 2019-03-21 11:00:44
  -->
 <template>
     <div id="app">
@@ -30,15 +30,16 @@ export default {
                 width: '300px'
             },
             test: '',
-            values: '3333',
+            values: ['11111'],
             selectParams: {
-                multiple: false,
+                multiple: true,
                 clearable: true,
                 placeholder: '请输入内容'
             },
             treeParams: {
                 clickParent: false,
                 filterable: true,
+                'check-strictly': true,
                 'default-expand-all': true,
                 'expand-on-click-node': false,
                 'render-content': this._renderFun,
@@ -46,6 +47,7 @@ export default {
                 props: {
                     children: 'child',
                     label: 'name',
+                    disabled: 'disabled',
                     value: 'testId'
                 }
             }
@@ -56,16 +58,24 @@ export default {
             {
                 testId: '1',
                 name: '节点1',
+                disabled: true,
                 child: [
                     {
-                        testId: '3333',
+                        testId: '11111',
                         name: '子节点'
                     }
                 ]
             },
             {
                 testId: '2',
-                name: '节点2'
+                name: '节点2',
+                child: [
+                    {
+                        testId: '222222',
+                        disabled: true,
+                        name: '子节点'
+                    }
+                ]
             },
             {
                 testId: '3',

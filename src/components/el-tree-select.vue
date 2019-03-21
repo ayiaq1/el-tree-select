@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 09:52:45
+ * @LastEditTime: 2019-03-21 10:58:12
  -->
 <template>
     <div class="el-tree-select">
@@ -89,10 +89,10 @@ export default {
         },
         treeParams: {
             clickParent: {
-                // 在有子级的情况下是否允许点击父级关闭弹出框
+                // 在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框
                 type: Boolean,
                 default() {
-                    return true;
+                    return false;
                 }
             },
             data: {
@@ -122,6 +122,7 @@ export default {
         return {
             propsValue: props.value || 'flowId',
             propsLabel: props.label || 'name',
+            propsDisabled: props.disabled || 'disabled',
             propsChildren: props.children || 'children',
             data: [...data],
             keywords: '',
@@ -200,7 +201,7 @@ export default {
         _treeNodeClickFun(data, node, vm) {
             const { multiple } = this.selectParams;
             const { clickParent } = this.treeParams;
-            const { propsValue, propsChildren } = this;
+            const { propsValue, propsChildren,propsDisabled } = this;
             if (node.checked) {
                 const value = data[this.propsValue];
                 this.ids = this.ids.filter(id => id !== value);
@@ -215,7 +216,6 @@ export default {
                             this.visible = false;
                         } else {
                             // 不允许父级，阻止继续派发
-                            console.log('return');
                             return false;
                         }
                     } else {
@@ -223,6 +223,10 @@ export default {
                         this.visible = false;
                     }
                 } else {
+                    if(data[propsDisabled]){
+                        // 禁用，阻止继续派发
+                        return false;
+                    }
                     this.ids.push(data[propsValue]);
                 }
             }
