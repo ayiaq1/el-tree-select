@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-20 18:03:59
+ * @LastEditTime: 2019-03-21 10:03:39
  -->
 ## 基于element-ui 2.x扩展下拉带树的组件 下拉树状菜单
 
@@ -37,6 +37,10 @@ styles 对el-select设置style,类型:Object
 #### el-tree参数：
 ```
 treeParams  :     支持el-tree 相关参数
+增加：'clickParent'
+treeParams.clickParent 类型：Boolean 
+在selectParams.multiple=false单选情况下点击节点，判断是否关闭弹出框
+clickParent: true 允许点击父级关闭弹出框 false 只能点击子级关闭弹出框
 ```
 #### 搜索框参数：
 ```
@@ -84,6 +88,7 @@ searchFun(value){
 this.$refs.treeSelect.filterFun(val);
 ```
 ### 更新日志
+    3.0.14 增加treeParams.clickParent参数
     3.0.13 
         1.增加判断multiple,如果多选，点击父级不关闭弹出框
         2.修复点击节点没有切换多选问题

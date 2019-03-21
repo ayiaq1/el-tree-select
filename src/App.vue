@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-20 17:59:09
+ * @LastEditTime: 2019-03-21 10:00:56
  -->
 <template>
     <div id="app">
@@ -30,13 +30,14 @@ export default {
                 width: '300px'
             },
             test: '',
-            values: ['3333'],
+            values: '3333',
             selectParams: {
-                multiple: true,
+                multiple: false,
                 clearable: true,
                 placeholder: '请输入内容'
             },
             treeParams: {
+                clickParent: false,
                 filterable: true,
                 'default-expand-all': true,
                 'expand-on-click-node': false,

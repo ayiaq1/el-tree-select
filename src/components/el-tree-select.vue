@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-20 17:59:04
+ * @LastEditTime: 2019-03-21 09:52:45
  -->
 <template>
     <div class="el-tree-select">
@@ -88,6 +88,13 @@ export default {
             }
         },
         treeParams: {
+            clickParent: {
+                // 在有子级的情况下是否允许点击父级关闭弹出框
+                type: Boolean,
+                default() {
+                    return true;
+                }
+            },
             data: {
                 // 树菜单数据
                 type: Array,
@@ -192,23 +199,35 @@ export default {
         // 树点击
         _treeNodeClickFun(data, node, vm) {
             const { multiple } = this.selectParams;
-            const { propsValue } = this;
+            const { clickParent } = this.treeParams;
+            const { propsValue, propsChildren } = this;
             if (node.checked) {
                 const value = data[this.propsValue];
                 this.ids = this.ids.filter(id => id !== value);
             } else {
                 if (!multiple) {
-                    this.ids = [data[propsValue]];
+                    // 多选，不关闭，单选，判断是否允许点击父级关闭弹出框
+                    if (!clickParent) {
+                        const children = data[propsChildren];
+                        // 如果不允许点击父级,自身为末级，允许点击之后关闭
+                        if (!children || children.length === 0) {
+                            this.ids = [data[propsValue]];
+                            this.visible = false;
+                        } else {
+                            // 不允许父级，阻止继续派发
+                            console.log('return');
+                            return false;
+                        }
+                    } else {
+                        this.ids = [data[propsValue]];
+                        this.visible = false;
+                    }
                 } else {
                     this.ids.push(data[propsValue]);
                 }
             }
             this._emitFun();
             this.$emit('node-click', data, node, vm);
-            // 如果是多选，不关闭
-            if (!multiple) {
-                this.visible = false;
-            }
         },
         // 树勾选
         __treeCheckFun(data, node, vm) {
