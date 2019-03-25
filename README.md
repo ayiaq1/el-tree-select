@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 11:04:28
+ * @LastEditTime: 2019-03-25 17:25:49
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -112,6 +112,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.0.17 修复多选删除时，v-model没有更新问题
     3.0.16 修复disabled还能点击的问题
     3.0.15 增加disabled参数判断
     3.0.15 增加treeParams.clickParent参数,默认false,只允许点击子级关闭弹出框

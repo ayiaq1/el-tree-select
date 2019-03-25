@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-21 16:44:30
+ * @LastEditTime: 2019-03-25 17:24:19
  -->
 <template>
     <div class="el-tree-select">
@@ -257,6 +257,7 @@ export default {
                 propsChildren
             );
             this.$refs.tree.setCheckedKeys(this.ids);
+            this._emitFun();
         },
         // 下拉框清空数据
         _selectClearFun() {
