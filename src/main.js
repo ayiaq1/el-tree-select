@@ -1,28 +1,24 @@
+/*
+ * @moduleName:
+ * @Author: dawdler
+ * @LastModifiedBy: dawdler
+ * @Date: 2019-03-22 14:47:35
+ * @LastEditTime: 2019-03-25 11:22:47
+ */
 import Vue from 'vue';
 import App from './App';
-import {
-  Option,
-  Input,
-  Button,
-  Tree,
-  Popover,
-  Scrollbar,
-  Select
-} from 'element-ui';
+// 导入组件库
+import ElementUI from 'element-ui';
+import ElTreeSelect from './components/index';
+import 'element-ui/lib/theme-chalk/index.css';
+// 注册组件库
+Vue.use(ElementUI, {
+    size: 'small'
+});
+
+Vue.use(ElTreeSelect);
 Vue.config.productionTip = false;
-Vue.prototype.$ELEMENT = { size: 'small', zIndex: 5000 };
-Vue.component(Scrollbar.name, Scrollbar);
-Vue.component(Popover.name, Popover);
-Vue.component(Select.name, Select);
-Vue.component(Tree.name, Tree);
-Vue.component(Input.name, Input);
-Vue.component(Button.name, Button);
-Vue.component(Option.name, Option);
 
 new Vue({
-  el: '#app',
-  components: {
-    App
-  },
-  template: '<App/>'
-})
+    render: h => h(App)
+}).$mount('#app');

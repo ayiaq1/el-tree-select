@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-25 17:24:19
+ * @LastEditTime: 2019-03-28 17:15:48
  -->
 <template>
     <div class="el-tree-select">
@@ -17,7 +17,7 @@
             </el-input>
             <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
                 <!-- 树列表 -->
-                <el-tree ref="tree" v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids[0]||''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" @node-click="_treeNodeClickFun" @check="__treeCheckFun"></el-tree>
+                <el-tree ref="tree" v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids.length>0?ids[0]:''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" @node-click="_treeNodeClickFun" @check="_treeCheckFun"></el-tree>
                 <!-- 暂无数据 -->
                 <div v-if="data.length===0" class="no-data">暂无数据</div>
             </el-scrollbar>
@@ -56,77 +56,126 @@
 }
 </style>
 <script>
-import { on, off } from '../utils/dom';
-import { each } from '../utils/utils';
+import { on, off } from '../../utils/dom';
+import { each } from '../../utils/utils';
+import { setTimeout } from 'timers';
+// @group api
 export default {
-    name: 'el-tree-select',
+    name: 'ElTreeSelect',
     props: {
-        styles: Object, // el-select样式
-        value: [String, Array], // v-model
+        // v-model,存储的是treeParams.data里面的id
+        value: {
+            // `String` / `Array`
+            type: [String, Array],
+            // `''`
+            default() {
+                return '';
+            }
+        },
+        // el-select样式
+        styles: {
+            type: Object,
+            // {}
+            default() {
+                return {};
+            }
+        },
+        // 是否禁用文本框
         disabled: {
             type: Boolean,
+            // false
             default() {
                 return false;
             }
         },
+        // 弹出框位置
         placement: {
-            // 弹出框位置
             type: String,
+            //  bottom
             default() {
                 return 'bottom';
             }
         },
+        /*
+        文本框参数，几乎支持el-select所有的API<br>
+        取消参数：<br>
+        设定下拉框的弹出框隐藏：<br>
+        `:popper-append-to-body="false"` <br>
+        搜索从弹出框里面执行： <br>
+        `:filterable="false"`
+        */
         selectParams: {
-            disabled: Boolean,
-            placeholder: String, // 搜索框默认文字
-            multiple: {
-                // 是否多选
-                type: Boolean,
-                default() {
-                    return false;
-                }
+            type: Object,
+            /*
+            Object默认参数：<br><br>
+            是否可以清空选项：<br>
+            `clearable: true,`<br><br>
+            是否禁用：<br>
+            `disabled: false,`<br><br>
+            搜索框placeholder文字：<br>
+            `placeholder: '请选择',`<br><br>
+            是否多选：<br>
+            `multiple: false`<br><br>
+            */
+            default() {
+                return {
+                    clearable: true,
+                    disabled: false,
+                    placeholder: '请选择',
+                    multiple: false
+                };
             }
         },
+        /*
+        下拉树参数，几乎支持el-tree所有的API<br>
+         取消参数:<br>
+        `:show-checkbox="selectParams.multiple"`<br>
+        使用下拉框参数multiple判断是否对树进行多选<br>
+        取消对el-tree的人为传参show-checkbox<br>
+        `:node-key="propsValue"`     自动获取treeParams.props.value<br>
+        `:draggable="false"`         屏蔽拖动
+        */
         treeParams: {
-            clickParent: {
-                // 在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框
-                type: Boolean,
-                default() {
-                    return false;
-                }
-            },
-            data: {
-                // 树菜单数据
-                type: Array,
-                default() {
-                    return [];
-                }
-            },
-            props: {
-                // 树菜单 默认数据设置
-                type: Object,
-                default() {
-                    return {
+            type: Object,
+            /*
+            Object默认参数：<br><br>
+            在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框：`clickParent: false`<br><br>
+            是否显示搜索框：<br>
+            `filterable: false`<br><br>
+            下拉树的数据：<br>
+            `data:[]`<br><br>
+            下拉树的props：<br>
+            `props: {`<br>
+                `children: 'children',`<br>
+                `label: 'name',`<br>
+                `value: 'flowId',`<br>
+                `disabled: 'disabled'`<br>
+            `}`
+            */
+            default() {
+                return {
+                    clickParent: false,
+                    filterable: false,
+                    data: [],
+                    props: {
                         children: 'children',
                         label: 'name',
                         value: 'flowId',
                         disabled: 'disabled'
-                    };
-                }
+                    }
+                };
             }
         }
     },
     data() {
-        const { props, data } = this.treeParams;
-        const { multiple } = this.selectParams;
         return {
-            propsValue: props.value || 'flowId',
-            propsLabel: props.label || 'name',
-            propsDisabled: props.disabled || 'disabled',
-            propsChildren: props.children || 'children',
-            data: [...data],
+            propsValue: 'flowId',
+            propsLabel: 'name',
+            propsDisabled: 'disabled',
+            propsChildren: 'children',
+            data: [],
             keywords: '',
-            labels: multiple ? [] : '', // 存储名称，用于下拉框显示内容
+            labels: '', // 存储名称，用于下拉框显示内容
             ids: [], // 存储id
             selectNodes: [], // 选中数据
             visible: false, // popover v-model
@@ -150,24 +199,43 @@ export default {
         }
     },
     created() {
-        if (this.selectParams.multiple) {
+        const { props, data } = this.treeParams;
+        const { multiple } = this.selectParams;
+        this.propsValue = props.value;
+        this.propsLabel = props.label;
+        this.propsDisabled = props.disabled;
+        this.propsChildren = props.children;
+        this.data = data.length > 0 ? [...data] : [];
+        if (multiple) {
+            this.labels = [];
             this.ids = this.value;
         } else {
+            this.labels = '';
             this.ids = [this.value];
         }
     },
     mounted() {
         this._updateH();
-        on(document, 'mouseup', this._popoverHideFun);
+        this.$nextTick(() => {
+            on(document, 'mouseup', this._popoverHideFun);
+        });
     },
     methods: {
         // 输入文本框输入内容抛出
         _searchFun() {
+            /*
+            对外抛出搜索方法，自行判断是走后台查询，还是前端过滤<br>
+            前端过滤：this.$refs.treeSelect.$refs.tree.filter(value);<br>
+            后台查询：this.$refs.treeSelect.treeDataUpdateFun(data);
+            */
             this.$emit('searchFun', this.keywords);
         },
-        // 根据id筛选当前树名称，以及选中树列表
+        //  根据id筛选当前树名称，以及选中树列表
         _setSelectNodeFun(ids) {
             const el = this.$refs.tree;
+            if (!el) {
+                throw new Error('找不到tree dom');
+            }
             const { multiple } = this.selectParams;
             // 长度为0，清空选择
             if (ids.length === 0 || this.data.length === 0) {
@@ -190,7 +258,14 @@ export default {
                     this.labels = '';
                 }
             }
-            this.$refs.popover.updatePopper();
+            this._updatePopoverLocationFun();
+        },
+        // 更新popover位置
+        _updatePopoverLocationFun() {
+            // dom高度还没有更新，做一个延迟
+            setTimeout(() => {
+                this.$refs.popover.updatePopper();
+            }, 50);
         },
         // 树过滤
         _filterFun(value, data, node) {
@@ -231,15 +306,27 @@ export default {
                 }
             }
             this._emitFun();
+            /*
+            点击节点，对外抛出   `data, node, vm`<br>
+            `data:` 当前点击的节点数据<br>
+            `node:` 当前点击的node<br>
+            `vm:` 当前组件的vm
+            */
             this.$emit('node-click', data, node, vm);
         },
         // 树勾选
-        __treeCheckFun(data, node, vm) {
+        _treeCheckFun(data, node, vm) {
             this.ids = [];
             const { propsValue } = this;
             node.checkedNodes.forEach(item => {
                 this.ids.push(item[propsValue]);
             });
+            /*
+            点击复选框，对外抛出   `data, node, vm`<br>
+            `data:` 当前点击的节点数据<br>
+            `node:` 当前点击的node<br>
+            `vm:` 当前组件的vm
+            */
             this.$emit('check', data, node, vm);
             this._emitFun();
         },
@@ -263,13 +350,17 @@ export default {
         _selectClearFun() {
             this.ids = [];
             const { multiple } = this.selectParams;
+            // 下拉框清空，对外抛出``this.$emit('input', multiple ? [] : '');`
             this.$emit('input', multiple ? [] : '');
+            // 下拉框清空，对外抛出``this.$emit('select-clear');`
             this.$emit('select-clear');
+            this._updatePopoverLocationFun();
         },
         // 判断类型，抛出当前选中id
         _emitFun() {
             const { multiple } = this.selectParams;
-            this.$emit('input', multiple ? this.ids : this.ids[0]);
+            this.$emit('input', multiple ? this.ids : this.ids.length > 0 ? this.ids[0] : '');
+            this._updatePopoverLocationFun();
         },
         // 更新宽度
         _updateH() {
@@ -290,7 +381,11 @@ export default {
                 this.visible = false;
             }
         },
-        // 树列表更新数据
+        /**
+         * @vuese
+         * 树列表更新数据
+         * @arg Array
+         */
         treeDataUpdateFun(data) {
             this.data = data;
             // 数据更新完成之后，判断是否回显内容
@@ -298,7 +393,12 @@ export default {
                 this._setSelectNodeFun(this.ids);
             }, 300);
         },
-        // 本地过滤方法
+
+        /**
+         * @vuese
+         * 本地过滤方法
+         * @arg String
+         */
         filterFun(val) {
             this.$refs.tree.filter(val);
         }

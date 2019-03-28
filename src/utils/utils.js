@@ -3,11 +3,11 @@
  * @Author: dawdler
  * @Date: 2019-01-09 15:30:18
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-02-19 13:50:21
+ * @LastEditTime: 2019-03-22 16:31:42
  */
 export default {
-  getTreeData,
-  each
+    getTreeData,
+    each
 };
 /*
 each(arr, (item, children) => {
@@ -24,20 +24,20 @@ each(arr, (item, children) => {
         item.value = xx;
     });
  */
-export function each(data, callback, childName = "children") {
-  let current;
-  let children;
-  for (let i = 0, len = data.length; i < len; i++) {
-    current = data[i];
-    children = [];
-    if (current[childName] && current[childName].length > 0) {
-      children = current[childName];
+export function each(data, callback, childName = 'children') {
+    let current;
+    let children;
+    for (let i = 0, len = data.length; i < len; i++) {
+        current = data[i];
+        children = [];
+        if (current[childName] && current[childName].length > 0) {
+            children = current[childName];
+        }
+        callback && callback(current, children);
+        if (children.length > 0) {
+            each(children, callback, childName);
+        }
     }
-    callback && callback(current, children);
-    if (children.length > 0) {
-      each(children, callback, childName);
-    }
-  }
 }
 
 /**
@@ -57,22 +57,22 @@ export function each(data, callback, childName = "children") {
  * let arr=utils.getTreeData(arr, 'flowId', item.decategoryId, 'name','children',true);
  */
 export function getTreeData(
-  data,
-  id = "id",
-  val = "",
-  name = "name",
-  children = "children",
-  isRow = false
-) {
-  let arr = [];
-  each(
     data,
-    item => {
-      if (item[id] === val) {
-        arr.push(item);
-      }
-    },
-    children
-  );
-  return arr.length > 0 ? (isRow ? arr : arr[0][name]) : null;
+    id = 'id',
+    val = '',
+    name = 'name',
+    children = 'children',
+    isRow = false
+) {
+    let arr = [];
+    each(
+        data,
+        item => {
+            if (item[id] === val) {
+                arr.push(item);
+            }
+        },
+        children
+    );
+    return arr.length > 0 ? (isRow ? arr : arr[0][name]) : null;
 }

@@ -1,13 +1,13 @@
 <!--
- * @moduleName: 
+ * @moduleName:
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-25 17:24:50
+ * @LastEditTime: 2019-03-28 14:11:29
  -->
 <template>
     <div id="app">
-        <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
+        <el-tree-select v-model="values" ref="treeSelect"/>
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
@@ -21,7 +21,6 @@
 }
 </style>
 <script>
-import ELTreeSelect from './components/el-tree-select.vue';
 export default {
     name: 'App',
     data() {
@@ -53,50 +52,8 @@ export default {
             }
         };
     },
-    mounted() {
-        let data = [
-            {
-                testId: '1',
-                name: '节点1',
-                disabled: true,
-                child: [
-                    {
-                        testId: '11111',
-                        name: '子节点'
-                    }
-                ]
-            },
-            {
-                testId: '2',
-                name: '节点2',
-                child: [
-                    {
-                        testId: '222222',
-                        disabled: true,
-                        name: '子节点'
-                    }
-                ]
-            },
-            {
-                testId: '3',
-                name: '节点3'
-            },
-            {
-                testId: '4',
-                name: '节点4'
-            },
-            {
-                testId: '5',
-                name: '节点5'
-            },
-            {
-                testId: '6',
-                name: '节点6'
-            }
-        ];
-        this.treeParams.data = data;
-        this.$refs.treeSelect.treeDataUpdateFun(data);
-    },
+    created() {},
+    mounted() {},
     methods: {
         // 下拉框修改
         _selectChange(val) {
@@ -124,6 +81,6 @@ export default {
             );
         }
     },
-    components: { ELTreeSelect }
+    components: {}
 };
 </script>
