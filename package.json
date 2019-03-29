@@ -20,7 +20,7 @@
     "tree"
   ],
   "scripts": {
-    "api": "rmdir /s/q website && vuese gen --title=el-tree-select --outDir=docs",
+    "api": "mkdir /s/q website && vuese gen --title=el-tree-select && mkdir /s/q docs\\website && copy website docs",
     "api:open": "vuese serve --open",
     "build": "vue-cli-service build --target lib --name el-tree-select --dest dist src/components/index.js",
     "dev": "vue-cli-service serve",

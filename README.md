@@ -3,10 +3,18 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-28 17:37:09
+ * @LastEditTime: 2019-03-28 17:44:14
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
+
+### 在线API
+
+https://ayiaq1.github.io/el-tree-select/#/components/ElTreeSelect
+
+### 在线测试
+
+https://ayiaq1.github.io/el-tree-select/#/components/ElTreeSelect
 
 ###
 
