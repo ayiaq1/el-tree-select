@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @LastModifiedBy: dawdler
  * @Date: 2019-03-27 15:07:32
- * @LastEditTime: 2019-03-28 14:21:49
+ * @LastEditTime: 2019-03-29 14:14:16
  */
 import { storiesOf } from '@storybook/vue';
 import { withKnobs, array, object } from '@storybook/addon-knobs';
@@ -21,12 +21,19 @@ storiesOf('渲染', module)
   .add('通过props传参数', () => ({
     components: { ElTreeSelect },
     template: `
-        <ElTreeSelect v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams"/>
+        <el-row>
+            <el-col :span="12">
+            <ElTreeSelect v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" ref="treeSelect"></ElTreeSelect>
+            </el-col>
+            <el-col :span="12">
+            当前选中数据ID：{{values}}
+            </el-col>
+        </el-row>
     `,
     props: {
       styles: {
         type: Object,
-        default: object('调整样式：', { width: '600px' })
+        default: object('调整样式：', { width: '500px' })
       },
       values: {
         type: [String, Array],
