@@ -20,11 +20,11 @@
     "tree"
   ],
   "scripts": {
-    "api": "mkdir /s/q website && vuese gen --title=el-tree-select && mkdir /s/q docs\\website && copy website docs",
+    "api": "rmdir /s/q website && vuese gen --title=el-tree-select && rmdir /s/q docs\\website &&xcopy website docs\\website /s /e /c /q /f /i /r /y",
     "api:open": "vuese serve --open",
     "build": "vue-cli-service build --target lib --name el-tree-select --dest dist src/components/index.js",
     "dev": "vue-cli-service serve",
-    "test:build": "vue-cli-service storybook:build -c config/storybook",
+    "test:build": "rmdir /s/q storybook-static && vue-cli-service storybook:build -c config/storybook && rmdir /s/q docs\\storybook-static &&xcopy storybook-static docs\\storybook-static /s /e /c /q /f /i /r /y",
     "test": "vue-cli-service storybook:serve -p 1000 -c config/storybook"
   },
   "dependencies": {
