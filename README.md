@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-29 09:25:30
+ * @LastEditTime: 2019-04-01 15:34:18
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -17,6 +17,8 @@
 ###
 
 ![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
+
+### 如果本地启动API需要全局安装：npm install -g @vuese/cli
 
 ### API：
 
