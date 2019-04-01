@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-28 14:11:29
+ * @LastEditTime: 2019-04-01 15:52:25
  -->
 <template>
     <div id="app">
@@ -29,7 +29,7 @@ export default {
                 width: '300px'
             },
             test: '',
-            values: ['11111'],
+            values: ['11'],
             selectParams: {
                 multiple: true,
                 clearable: true,

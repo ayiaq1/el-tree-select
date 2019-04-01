@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-04-01 15:34:18
+ * @LastEditTime: 2019-04-01 15:54:02
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -120,6 +120,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.1  默认v-model增加兼容性判断
     3.1.0  升级为vue-cli3，添加部分测试，添加api文档
     3.0.16 修复disabled还能点击的问题
     3.0.15 增加disabled参数判断

@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-28 17:15:48
+ * @LastEditTime: 2019-04-01 15:58:58
  -->
 <template>
     <div class="el-tree-select">
@@ -108,21 +108,21 @@ export default {
             type: Object,
             /*
             Object默认参数：<br><br>
+            是否多选：<br>
+            `multiple: true`<br><br>
             是否可以清空选项：<br>
             `clearable: true,`<br><br>
             是否禁用：<br>
             `disabled: false,`<br><br>
             搜索框placeholder文字：<br>
             `placeholder: '请选择',`<br><br>
-            是否多选：<br>
-            `multiple: false`<br><br>
             */
             default() {
                 return {
+                    multiple: true,
                     clearable: true,
                     disabled: false,
-                    placeholder: '请选择',
-                    multiple: false
+                    placeholder: '请选择'
                 };
             }
         },
@@ -211,7 +211,7 @@ export default {
             this.ids = this.value;
         } else {
             this.labels = '';
-            this.ids = [this.value];
+            this.ids = this.value instanceof Array ? this.value : [this.value];
         }
     },
     mounted() {
