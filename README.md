@@ -20,6 +20,12 @@
 
 ### 如果本地启动API需要全局安装：npm install -g @vuese/cli
 
+### 需在main.js注册组件：
+```
+import ElTreeSelect from 'el-tree-select';
+vue.use(ElTreeSelect);
+内部直接使用 :  <el-tree-select v-model="id"/>
+```
 ### API：
 
 #### 特殊点(屏蔽 el-select、el-tree 的几个参数)：
@@ -165,7 +171,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 <template>
     <div id="app">
-        <ELTreeSelect :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
+        <el-tree-select :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
@@ -179,7 +185,6 @@ this.$refs.treeSelect.filterFun(val);
 }
 </style>
 <script>
-import ELTreeSelect from './components/el-tree-select.vue';
 export default {
     name: 'App',
     data() {
