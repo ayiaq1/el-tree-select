@@ -287,7 +287,7 @@ export default {
             );
         }
     },
-    components: { ELTreeSelect }
+    components: { }
 };
 </script>
 
