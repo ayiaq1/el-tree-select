@@ -3,29 +3,31 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-04-01 15:54:02
+ * @LastEditTime: 2019-05-07 11:10:36
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
 
 ### Demo
 
-##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线API</a>
+##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线 API</a>
 
-##### <a href="https://ayiaq1.github.io/el-tree-select/storybook-static" target="_blank">在线测试</a>
+##### <a href="https://ayiaq1.github.io/el-tree-select/storybook-static/?path=/story/%E6%B8%B2%E6%9F%93--%E9%80%9A%E8%BF%87props%E4%BC%A0%E5%8F%82%E6%95%B0" target="_blank">在线测试</a>
 
 ###
 
 ![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
 
-### 如果本地启动API需要全局安装：npm install -g @vuese/cli
+### 如果本地启动 API 需要全局安装：npm install -g @vuese/cli
 
-### 需在main.js注册组件：
+### 需在 main.js 注册组件：
+
 ```
 import ElTreeSelect from 'el-tree-select';
 vue.use(ElTreeSelect);
 内部直接使用 :  <el-tree-select v-model="id"/>
 ```
+
 ### API：
 
 #### 特殊点(屏蔽 el-select、el-tree 的几个参数)：
@@ -126,6 +128,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+
     3.1.1  默认v-model增加兼容性判断
     3.1.0  升级为vue-cli3，添加部分测试，添加api文档
     3.0.16 修复disabled还能点击的问题
