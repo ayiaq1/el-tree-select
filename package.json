@@ -1,6 +1,6 @@
 {
   "name": "el-tree-select",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "基于element-ui2.x扩展下拉带树的组件,目前已剥离组件可作为独立插件使用",
   "author": "dawdler",
   "private": false,
@@ -23,9 +23,8 @@
     "api": "vuese gen --title=el-tree-select && rmdir /s/q docs\\website && move website docs",
     "api:open": "vuese serve --open",
     "build": "vue-cli-service build --target lib --name el-tree-select --dest dist src/components/index.js",
-    "dev": "vue-cli-service serve",
     "test:build": "vue-cli-service storybook:build -c config/storybook && rmdir /s/q docs\\storybook-static && move storybook-static docs",
-    "test": "vue-cli-service storybook:serve -p 1000 -c config/storybook"
+    "dev": "vue-cli-service storybook:serve -p 1000 -c config/storybook"
   },
   "dependencies": {
     "element-ui": "2.4.11",
@@ -49,5 +48,8 @@
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21"
   },
-  "main": "dist/el-tree-select.umd.min.js"
+  "main": "dist/el-tree-select.umd.min.js",
+  "files": [
+    "dist"
+  ]
 }

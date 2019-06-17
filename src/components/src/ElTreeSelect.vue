@@ -3,14 +3,15 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-04-01 15:58:58
+ * @LastEditTime: 2019-06-14 14:05:26
  -->
 <template>
     <div class="el-tree-select">
         <!-- 下拉文本 -->
-        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" @clear="_selectClearFun" @focus="_popoverShowFun"></el-select>
+        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" @clear="_selectClearFun" @focus="_popoverShowFun">
+        </el-select>
         <!-- 弹出框 -->
-        <el-popover :disabled="disabled" ref="popover" :placement="placement" popper-class="el-tree-select-popper" :width="width" v-model="visible" trigger="click">
+        <el-popover ref="popover" :placement="placement" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
             <!-- 是否显示搜索框 -->
             <el-input v-if="treeParams.filterable" v-model="keywords" size="mini" class="input-with-select mb10" @change="_searchFun">
                 <el-button slot="append" icon="el-icon-search"></el-button>
@@ -26,39 +27,46 @@
 </template>
 <style>
 .el-tree-select .select-option {
-    display: none !important;
+  display: none !important;
+}
+
+[aria-disabled='true'] > .el-tree-node__content {
+  color: inherit !important;
+  background: transparent !important;
+  cursor: no-drop !important;
 }
 
 .el-tree-select-popper {
-    max-height: 400px;
-    overflow: auto;
+  max-height: 400px;
+  overflow: auto;
 }
-
+.el-tree-select-popper.disabled {
+  display: none !important;
+}
 .el-tree-select-popper .el-button--small {
-    width: 25px !important;
-    min-width: 25px !important;
+  width: 25px !important;
+  min-width: 25px !important;
 }
 
 .el-tree-select-popper[x-placement^='bottom'] {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .mb10 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .no-data {
-    height: 32px;
-    line-height: 32px;
-    font-size: 14px;
-    color: #cccccc;
-    text-align: center;
+  height: 32px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #cccccc;
+  text-align: center;
 }
 </style>
 <script>
 import { on, off } from '../../utils/dom';
 import { each } from '../../utils/utils';
-import { setTimeout } from 'timers';
 // @group api
 export default {
     name: 'ElTreeSelect',
@@ -183,12 +191,12 @@ export default {
         };
     },
     watch: {
-        ids: function(val) {
+        ids: function (val) {
             if (val !== undefined) {
                 this._setSelectNodeFun(val);
             }
         },
-        value: function(val) {
+        value: function (val) {
             if (this.ids !== val) {
                 if (this.selectParams.multiple) {
                     this.ids = val;
@@ -196,6 +204,11 @@ export default {
                     this.ids = val === '' ? [] : [val];
                 }
             }
+        }
+    },
+    computed: {
+        popperClass() {
+            return this.disabled ? 'el-tree-select-popper disabled' : 'el-tree-select-popper';
         }
     },
     created() {
@@ -243,7 +256,7 @@ export default {
                 if (multiple) {
                     el.setCheckedKeys([]);
                 } else {
-                    el.setCurrentKey('');
+                    el.setCurrentKey(null);
                 }
                 return;
             }
@@ -344,6 +357,7 @@ export default {
                 propsChildren
             );
             this.$refs.tree.setCheckedKeys(this.ids);
+            this.$emit('removeTag', this.ids, tag);
             this._emitFun();
         },
         // 下拉框清空数据
@@ -369,7 +383,7 @@ export default {
             });
         },
         // 显示弹出框的时候容错，查看是否和el宽度一致
-        _popoverShowFun() {
+        _popoverShowFun(val) {
             this._updateH();
         },
         // 判断是否隐藏弹出框

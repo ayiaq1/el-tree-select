@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-05-07 11:10:36
+ * @LastEditTime: 2019-06-17 16:59:28
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -24,7 +24,7 @@
 
 ```
 import ElTreeSelect from 'el-tree-select';
-vue.use(ElTreeSelect);
+Vue.use(ElTreeSelect);
 内部直接使用 :  <el-tree-select v-model="id"/>
 ```
 
@@ -129,6 +129,9 @@ this.$refs.treeSelect.filterFun(val);
 
 ### 更新日志
 
+    3.1.2  
+          1.修复选中之后清空数据el-tree还有选中问题
+          2.修复禁用的样式问题
     3.1.1  默认v-model增加兼容性判断
     3.1.0  升级为vue-cli3，添加部分测试，添加api文档
     3.0.16 修复disabled还能点击的问题
