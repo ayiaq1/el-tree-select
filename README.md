@@ -3,31 +3,29 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-06-17 16:59:28
+ * @LastEditTime: 2019-07-05 17:06:39
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
 
 ### Demo
 
-##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线 API</a>
+##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线API</a>
 
-##### <a href="https://ayiaq1.github.io/el-tree-select/storybook-static/?path=/story/%E6%B8%B2%E6%9F%93--%E9%80%9A%E8%BF%87props%E4%BC%A0%E5%8F%82%E6%95%B0" target="_blank">在线测试</a>
+##### <a href="https://ayiaq1.github.io/el-tree-select/storybook-static" target="_blank">在线测试</a>
 
 ###
 
 ![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
 
-### 如果本地启动 API 需要全局安装：npm install -g @vuese/cli
+### 如果本地启动API需要全局安装：npm install -g @vuese/cli
 
-### 需在 main.js 注册组件：
-
+### 需在main.js注册组件：
 ```
 import ElTreeSelect from 'el-tree-select';
-Vue.use(ElTreeSelect);
+vue.use(ElTreeSelect);
 内部直接使用 :  <el-tree-select v-model="id"/>
 ```
-
 ### API：
 
 #### 特殊点(屏蔽 el-select、el-tree 的几个参数)：
@@ -56,6 +54,9 @@ selectParams  :     支持el-select 相关参数
 
 #### styles参数：
 styles 对el-select设置style,类型:Object
+
+#### selectClass参数：
+selectClass  对el-select设置class,类型:String
 ```
 
 #### el-tree 参数：
@@ -66,6 +67,10 @@ treeParams  :     支持el-tree 相关参数
 treeParams.clickParent 类型：Boolean 默认：false
 在selectParams.multiple=false单选情况下点击节点，判断是否关闭弹出框
 clickParent: true 允许点击父级关闭弹出框 false 只能点击子级关闭弹出框
+```
+#### popover 参数：
+```
+popperClass  对应：popper-class,类型:String
 ```
 
 #### 搜索框参数：
@@ -80,6 +85,11 @@ treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到
 
 ```
 select-clear 下拉框清空事件   this.$emit('select-clear');
+```
+###### removeTag
+
+```
+removeTag 移除单个标签，返回所有勾选的ids，以及当前移除的tag（可能为中文）标签   this.$emit('removeTag',ids,tag);
 ```
 
 ###### node-click
@@ -128,10 +138,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
-
-    3.1.2  
-          1.修复选中之后清空数据el-tree还有选中问题
-          2.修复禁用的样式问题
+    3.1.3  扩展，支持下拉框和popover挂类,修复了文档说明bug
     3.1.1  默认v-model增加兼容性判断
     3.1.0  升级为vue-cli3，添加部分测试，添加api文档
     3.0.16 修复disabled还能点击的问题
@@ -177,7 +184,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 <template>
     <div id="app">
-        <el-tree-select :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
+        <el-tree-select :styles="styles" v-model="values" :selectParams="selectParams" :treeParams="treeParams" :treeRenderFun="_renderFun" @searchFun="_searchFun" @node-click="_nodeClickFun" ref="treeSelect"/>
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
@@ -211,7 +218,6 @@ export default {
                 'check-strictly': true,
                 'default-expand-all': true,
                 'expand-on-click-node': false,
-                'render-content': this._renderFun,
                 data: [],
                 props: {
                     children: 'child',

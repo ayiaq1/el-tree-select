@@ -3,12 +3,12 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-06-14 14:05:26
+ * @LastEditTime: 2019-07-05 17:07:03
  -->
 <template>
-    <div class="el-tree-select">
+    <div class="el-tree-select" :class="selectClass">
         <!-- 下拉文本 -->
-        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" @clear="_selectClearFun" @focus="_popoverShowFun">
+        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun">
         </el-select>
         <!-- 弹出框 -->
         <el-popover ref="popover" :placement="placement" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
@@ -18,7 +18,7 @@
             </el-input>
             <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
                 <!-- 树列表 -->
-                <el-tree ref="tree" v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids.length>0?ids[0]:''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" @node-click="_treeNodeClickFun" @check="_treeCheckFun"></el-tree>
+                <el-tree ref="tree" v-show="data.length>0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids.length>0?ids[0]:''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" :render-content="treeRenderFun" @node-click="_treeNodeClickFun" @check="_treeCheckFun"></el-tree>
                 <!-- 暂无数据 -->
                 <div v-if="data.length===0" class="no-data">暂无数据</div>
             </el-scrollbar>
@@ -88,6 +88,20 @@ export default {
                 return {};
             }
         },
+        // 下拉框 挂类
+        selectClass: {
+            type: String,
+            default() {
+                return '';
+            }
+        },
+        // popover 挂类
+        popoverClass: {
+            type: String,
+            default() {
+                return '';
+            }
+        },
         // 是否禁用文本框
         disabled: {
             type: Boolean,
@@ -104,6 +118,8 @@ export default {
                 return 'bottom';
             }
         },
+        // 树渲染方法，具体参考el-tree Function(h, { node, data, store }) {}
+        treeRenderFun: Function,
         /*
         文本框参数，几乎支持el-select所有的API<br>
         取消参数：<br>
@@ -168,6 +184,7 @@ export default {
                     props: {
                         children: 'children',
                         label: 'name',
+                        code: 'code',
                         value: 'flowId',
                         disabled: 'disabled'
                     }
@@ -179,6 +196,7 @@ export default {
         return {
             propsValue: 'flowId',
             propsLabel: 'name',
+            propsCode: null, // 可能有空的情况
             propsDisabled: 'disabled',
             propsChildren: 'children',
             data: [],
@@ -208,7 +226,8 @@ export default {
     },
     computed: {
         popperClass() {
-            return this.disabled ? 'el-tree-select-popper disabled' : 'el-tree-select-popper';
+            let _c = 'el-tree-select-popper ' + this.popoverClass;
+            return this.disabled ? _c + ' disabled ' : _c;
         }
     },
     created() {
@@ -216,6 +235,7 @@ export default {
         const { multiple } = this.selectParams;
         this.propsValue = props.value;
         this.propsLabel = props.label;
+        this.propsCode = props.code || null; // 可能为空
         this.propsDisabled = props.disabled;
         this.propsChildren = props.children;
         this.data = data.length > 0 ? [...data] : [];
@@ -262,11 +282,23 @@ export default {
             }
             if (multiple) {
                 el.setCheckedKeys(ids);
-                this.labels = el.getCheckedNodes().map(item => item[this.propsLabel]) || [];
+                if (this.propsCode) {
+                    // 如果有code   labels=code(name)
+                    this.labels = el.getCheckedNodes().map(
+                        item => item[this.propsCode] ? item[this.propsLabel] + '(' + item[this.propsCode] + ')' : item[this.propsLabel]
+                    ) || [];
+                } else {
+                    this.labels = el.getCheckedNodes().map(item => item[this.propsLabel]) || [];
+                }
             } else {
                 el.setCurrentKey(ids[0]);
                 if (el.getCurrentNode()) {
-                    this.labels = el.getCurrentNode()[this.propsLabel];
+                    if (this.propsCode) {
+                        // 如果有code   labels=code(name)
+                        this.labels = el.getCurrentNode()[this.propsCode] ? el.getCurrentNode()[this.propsLabel] + '(' + el.getCurrentNode()[this.propsCode] + ')' : el.getCurrentNode()[this.propsLabel];
+                    } else {
+                        this.labels = el.getCurrentNode()[this.propsLabel];
+                    }
                 } else {
                     this.labels = '';
                 }
@@ -403,9 +435,11 @@ export default {
         treeDataUpdateFun(data) {
             this.data = data;
             // 数据更新完成之后，判断是否回显内容
-            setTimeout(() => {
-                this._setSelectNodeFun(this.ids);
-            }, 300);
+            if (data.length > 0) {
+                setTimeout(() => {
+                    this._setSelectNodeFun(this.ids);
+                }, 300);
+            }
         },
 
         /**
