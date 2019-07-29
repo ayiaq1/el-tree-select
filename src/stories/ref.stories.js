@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @LastModifiedBy: dawdler
  * @Date: 2019-03-27 15:07:32
- * @LastEditTime: 2019-03-29 14:29:35
+ * @LastEditTime: 2019-07-29 11:38:11
  */
 import { storiesOf } from '@storybook/vue';
 import { withKnobs } from '@storybook/addon-knobs';
@@ -38,9 +38,8 @@ storiesOf('ref调整数据', module)
         styles: {
           width: '300px'
         },
-        values: [],
+        values: '',
         selectParams: {
-          multiple: true,
           clearable: true,
           placeholder: '请输入内容'
         },
@@ -86,7 +85,7 @@ storiesOf('ref调整数据', module)
             ]
           }
         ];
-        this.values = [];
+        this.values = '1';
         this.$refs.treeSelect.treeDataUpdateFun(data);
       },
       _searchFun(val) {

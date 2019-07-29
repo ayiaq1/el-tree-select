@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @LastModifiedBy: dawdler
  * @Date: 2019-01-30 16:02:54
- * @LastEditTime: 2019-03-29 10:20:34
+ * @LastEditTime: 2019-07-29 14:05:38
  */
 module.exports = {
   filenameHashing: false,
@@ -18,8 +18,7 @@ module.exports = {
   },
   devServer: {
     open: true,
-    // host: 'localhost',
-    port: 6060,
+    port: 9999,
     https: false,
     hotOnly: false,
     proxy: null, // 设置代理

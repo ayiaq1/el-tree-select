@@ -3,12 +3,12 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-07-05 17:07:03
+ * @LastEditTime: 2019-07-29 14:45:35
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
         <!-- 下拉文本 -->
-        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun">
+        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun">
         </el-select>
         <!-- 弹出框 -->
         <el-popover ref="popover" :placement="placement" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
@@ -73,8 +73,8 @@ export default {
     props: {
         // v-model,存储的是treeParams.data里面的id
         value: {
-            // `String` / `Array`
-            type: [String, Array],
+            // `String` / `Array` / `Number`
+            type: [String, Array, Number],
             // `''`
             default() {
                 return '';
@@ -132,8 +132,6 @@ export default {
             type: Object,
             /*
             Object默认参数：<br><br>
-            是否多选：<br>
-            `multiple: true`<br><br>
             是否可以清空选项：<br>
             `clearable: true,`<br><br>
             是否禁用：<br>
@@ -143,7 +141,6 @@ export default {
             */
             default() {
                 return {
-                    multiple: true,
                     clearable: true,
                     disabled: false,
                     placeholder: '请选择'
@@ -216,8 +213,9 @@ export default {
         },
         value: function (val) {
             if (this.ids !== val) {
+                this._setMultipleFun();
                 if (this.selectParams.multiple) {
-                    this.ids = val;
+                    this.ids = [...val];
                 } else {
                     this.ids = val === '' ? [] : [val];
                 }
@@ -232,14 +230,14 @@ export default {
     },
     created() {
         const { props, data } = this.treeParams;
-        const { multiple } = this.selectParams;
+        this._setMultipleFun();
         this.propsValue = props.value;
         this.propsLabel = props.label;
         this.propsCode = props.code || null; // 可能为空
         this.propsDisabled = props.disabled;
         this.propsChildren = props.children;
         this.data = data.length > 0 ? [...data] : [];
-        if (multiple) {
+        if (this.selectParams.multiple) {
             this.labels = [];
             this.ids = this.value;
         } else {
@@ -254,6 +252,14 @@ export default {
         });
     },
     methods: {
+        // 根据类型判断单选，多选
+        _setMultipleFun() {
+            let multiple = false;
+            if (this.value instanceof Array) {
+                multiple = true;
+            }
+            this.$set(this.selectParams, 'multiple', multiple);
+        },
         // 输入文本框输入内容抛出
         _searchFun() {
             /*

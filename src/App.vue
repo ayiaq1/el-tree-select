@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-04-01 15:52:25
+ * @LastEditTime: 2019-07-29 14:46:42
  -->
 <template>
     <div id="app">
@@ -31,7 +31,6 @@ export default {
             test: '',
             values: ['11'],
             selectParams: {
-                multiple: true,
                 clearable: true,
                 placeholder: '请输入内容'
             },

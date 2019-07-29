@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-07-05 17:06:39
+ * @LastEditTime: 2019-07-29 14:05:16
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -33,7 +33,8 @@ vue.use(ElTreeSelect);
 ##### el-select 取消参数:
 
 ```
-:popper-append-to-body="false" 设定下拉框的弹出框隐藏
+multiple                       改为内置，通过v-model类型判断是否多选
+:filterable="false"            搜索从弹出框里面执行
 :filterable="false"            搜索从弹出框里面执行
 ```
 
@@ -138,7 +139,9 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.4  去掉selectParams.multiple参数，改为内置，由v-model判断类型,v-model增加Number类型
     3.1.3  扩展，支持下拉框和popover挂类,修复了文档说明bug
+    3.1.2  扩展，支持挂类
     3.1.1  默认v-model增加兼容性判断
     3.1.0  升级为vue-cli3，添加部分测试，添加api文档
     3.0.16 修复disabled还能点击的问题
