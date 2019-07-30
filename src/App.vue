@@ -3,11 +3,11 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-07-29 14:46:42
+ * @LastEditTime: 2019-07-30 09:33:55
  -->
 <template>
     <div id="app">
-        <el-tree-select v-model="values" ref="treeSelect"/>
+        <ElTreeSelect v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" ref="treeSelect"></ElTreeSelect>
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
@@ -15,9 +15,9 @@
 </template>
 <style>
 #app {
-    display: flex;
-    justify-content: space-between;
-    width: 600px;
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
 }
 </style>
 <script>
@@ -29,7 +29,7 @@ export default {
                 width: '300px'
             },
             test: '',
-            values: ['11'],
+            values: '',
             selectParams: {
                 clearable: true,
                 placeholder: '请输入内容'
@@ -41,7 +41,23 @@ export default {
                 'default-expand-all': true,
                 'expand-on-click-node': false,
                 'render-content': this._renderFun,
-                data: [],
+                data: [
+                    {
+                        testId: 1,
+                        name: '节点1',
+                        disabled: true,
+                        child: [
+                            {
+                                testId: 111111,
+                                name: '子节点'
+                            }
+                        ]
+                    },
+                    {
+                        testId: 3,
+                        name: '节点3'
+                    }
+                ],
                 props: {
                     children: 'child',
                     label: 'name',
@@ -51,8 +67,8 @@ export default {
             }
         };
     },
-    created() {},
-    mounted() {},
+    created() { },
+    mounted() { },
     methods: {
         // 下拉框修改
         _selectChange(val) {

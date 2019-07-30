@@ -24,7 +24,8 @@
     "api:open": "vuese serve --open",
     "build": "vue-cli-service build --target lib --name el-tree-select --dest dist src/components/index.js",
     "test:build": "vue-cli-service storybook:build -c config/storybook && rmdir /s/q docs\\storybook-static && move storybook-static docs",
-    "dev": "vue-cli-service storybook:serve -p 1000 -c config/storybook"
+    "test:dev": "vue-cli-service storybook:serve -p 1000 -c config/storybook",
+    "dev": "vue-cli-service serve"
   },
   "dependencies": {
     "element-ui": "2.4.11",
