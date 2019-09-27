@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-09-27 17:39:41
+ * @LastEditTime: 2019-09-27 19:31:41
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
@@ -427,7 +427,7 @@ export default {
         // 判断是否隐藏弹出框
         _popoverHideFun(e) {
             let isInter = e.path.some(list => {
-                return list && list.className && list.className.indexOf('el-tree-select') !== -1;
+                return list.className && typeof list.className === 'string' && list.className.indexOf('el-tree-select') !== -1;
             });
             if (!isInter) {
                 this.visible = false;

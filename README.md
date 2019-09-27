@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-07-29 14:05:16
+ * @LastEditTime: 2019-09-27 19:34:28
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -139,6 +139,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.6  处理popover隐藏时判断当前对象报错问题
     3.1.5  增加popover兼容性判断
     3.1.4  去掉selectParams.multiple参数，改为内置，由v-model判断类型,v-model增加Number类型
     3.1.3  扩展，支持下拉框和popover挂类,修复了文档说明bug
