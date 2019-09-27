@@ -139,6 +139,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.5  增加popover兼容性判断
     3.1.4  去掉selectParams.multiple参数，改为内置，由v-model判断类型,v-model增加Number类型
     3.1.3  扩展，支持下拉框和popover挂类,修复了文档说明bug
     3.1.2  扩展，支持挂类
