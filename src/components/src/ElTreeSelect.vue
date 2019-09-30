@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-09-27 19:31:41
+ * @LastEditTime: 2019-09-30 20:56:46
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
@@ -318,6 +318,27 @@ export default {
                 this.$refs.popover.updatePopper();
             }, 50);
         },
+        // 获取MouseEvent.path 针对浏览器兼容性兼容ie11,edge,chrome,firefox,safari
+        _getEventPath(evt) {
+            const path = (evt.composedPath && evt.composedPath()) || evt.path;
+            const target = evt.target;
+            if (path != null) {
+                return (path.indexOf(window) < 0) ? path.concat(window) : path;
+            }
+            if (target === window) {
+                return [window];
+            }
+            function getParents(node, memo) {
+                memo = memo || [];
+                const parentNode = node.parentNode;
+                if (!parentNode) {
+                    return memo;
+                } else {
+                    return getParents(parentNode, memo.concat(parentNode));
+                }
+            }
+            return [target].concat(getParents(target), window);
+        },
         // 树过滤
         _filterFun(value, data, node) {
             if (!value) return true;
@@ -426,10 +447,12 @@ export default {
         },
         // 判断是否隐藏弹出框
         _popoverHideFun(e) {
-            let isInter = e.path.some(list => {
+            const path = this._getEventPath(e);
+            let isInside = path.some(list => {
+                // 鼠标在弹出框内部，阻止隐藏弹出框
                 return list.className && typeof list.className === 'string' && list.className.indexOf('el-tree-select') !== -1;
             });
-            if (!isInter) {
+            if (!isInside) {
                 this.visible = false;
             }
         },

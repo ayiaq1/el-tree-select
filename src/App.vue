@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-07-30 09:33:55
+ * @LastEditTime: 2019-09-30 20:46:32
  -->
 <template>
     <div id="app">
@@ -11,13 +11,19 @@
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
+        <div>
+            测试焦点触发
+            <svg>
+                <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+            </svg>
+        </div>
     </div>
 </template>
 <style>
 #app {
   display: flex;
   justify-content: space-between;
-  width: 600px;
+  width: 100%;
 }
 </style>
 <script>
