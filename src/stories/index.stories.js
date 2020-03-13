@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @LastModifiedBy: dawdler
  * @Date: 2019-03-27 15:07:32
- * @LastEditTime: 2019-07-29 14:45:54
+ * @LastEditTime: 2020-03-13 16:18:01
  */
 import { storiesOf } from '@storybook/vue';
 import { withKnobs, array, object } from '@storybook/addon-knobs';
@@ -23,7 +23,7 @@ storiesOf('渲染', module)
         template: `
         <el-row>
             <el-col :span="12">
-            <ElTreeSelect v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" ref="treeSelect"></ElTreeSelect>
+            <ElTreeSelect v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" v-bind.sync="options" ref="treeSelect"></ElTreeSelect>
             </el-col>
             <el-col :span="12">
             当前选中数据ID：{{values}}
@@ -31,6 +31,10 @@ storiesOf('渲染', module)
         </el-row>
     `,
         props: {
+            options: {
+                type: Object,
+                default: object('v-bind配置参数', { popoverClass: 'testClass' })
+            },
             styles: {
                 type: Object,
                 default: object('调整样式：', { width: '500px' })
