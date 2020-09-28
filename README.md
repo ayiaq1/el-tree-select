@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-09-30 20:59:00
+ * @LastEditTime: 2020-09-28 10:50:05
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -34,7 +34,6 @@ vue.use(ElTreeSelect);
 
 ```
 multiple                       改为内置，通过v-model类型判断是否多选
-:filterable="false"            搜索从弹出框里面执行
 :filterable="false"            搜索从弹出框里面执行
 ```
 
@@ -139,9 +138,9 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
-    3.1.7 
-        1.增加popover获取鼠标对象的多浏览器兼容性判断
-        2.处理popover隐藏时判断当前对象报错问题
+    3.1.9 锁定element-ui最终版本2.13.2。修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。
+    3.1.8 增加popover获取鼠标对象的多浏览器兼容性判断
+    3.1.7 处理popover隐藏时判断当前对象报错问题
     3.1.4  去掉selectParams.multiple参数，改为内置，由v-model判断类型,v-model增加Number类型
     3.1.3  扩展，支持下拉框和popover挂类,修复了文档说明bug
     3.1.2  扩展，支持挂类
@@ -199,126 +198,4 @@ this.$refs.treeSelect.filterFun(val);
 <style>
 #app {
     display: flex;
-    justify-content: space-between;
-    width: 600px;
-}
-</style>
-<script>
-export default {
-    name: 'App',
-    data() {
-        return {
-            styles: {
-                width: '300px'
-            },
-            test: '',
-            values: ['11111'],
-            selectParams: {
-                multiple: true,
-                clearable: true,
-                placeholder: '请输入内容'
-            },
-            treeParams: {
-                clickParent: false,
-                filterable: true,
-                'check-strictly': true,
-                'default-expand-all': true,
-                'expand-on-click-node': false,
-                data: [],
-                props: {
-                    children: 'child',
-                    label: 'name',
-                    disabled: 'disabled',
-                    value: 'testId'
-                }
-            }
-        };
-    },
-    mounted() {
-        let data = [
-            {
-                testId: '1',
-                name: '节点1',
-                disabled: true,
-                child: [
-                    {
-                        testId: '11111',
-                        name: '子节点'
-                    }
-                ]
-            },
-            {
-                testId: '2',
-                name: '节点2',
-                child: [
-                    {
-                        testId: '222222',
-                        disabled: true,
-                        name: '子节点'
-                    }
-                ]
-            },
-            {
-                testId: '3',
-                name: '节点3'
-            },
-            {
-                testId: '4',
-                name: '节点4'
-            },
-            {
-                testId: '5',
-                name: '节点5'
-            },
-            {
-                testId: '6',
-                name: '节点6'
-            }
-        ];
-        this.treeParams.data = data;
-        this.$refs.treeSelect.treeDataUpdateFun(data);
-    },
-    methods: {
-        // 下拉框修改
-        _selectChange(val) {
-            console.log(val, '<-select change');
-        },
-        // 树点击
-        _nodeClickFun(data, node, vm) {
-            console.log('this _nodeClickFun', this.values, data, node);
-        },
-        // 树过滤
-        _searchFun(value) {
-            console.log(value, '<--_searchFun');
-            // 自行判断 是走后台查询，还是前端过滤
-            // this.$refs.treeSelect.$refs.tree.filter(value);
-            this.$refs.treeSelect.filterFun(value);
-            // 后台查询
-            // this.$refs.treeSelect.treeDataUpdateFun(treeData);
-        },
-        // 自定义render
-        _renderFun(h, { node, data, store }) {
-            return (
-                <span class='custom-tree-node'>
-                    <span>{node.label}</span>
-                </span>
-            );
-        }
-    },
-    components: { }
-};
-</script>
-
-```
-
-## 安装
-
-npm install el-tree-select --save-dev
-
-## git 地址
-
-https://github.com/ayiaq1/el-tree-select
-
-```
-
-```
+    justify-content: spa

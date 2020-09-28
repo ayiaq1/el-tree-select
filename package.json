@@ -1,6 +1,6 @@
 {
   "name": "el-tree-select",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "基于element-ui2.x扩展下拉带树的组件,目前已剥离组件可作为独立插件使用",
   "author": "dawdler",
   "private": false,
@@ -28,7 +28,8 @@
     "dev": "vue-cli-service serve"
   },
   "dependencies": {
-    "element-ui": "^2.4.11",
+    "element-ui": "2.13.2",
+    "core-js": "2.6.11",
     "vue": "^2.6.6"
   },
   "devDependencies": {
