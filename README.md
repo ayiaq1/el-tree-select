@@ -184,6 +184,7 @@ this.$refs.treeSelect.filterFun(val);
     1.4.4:增加CSS样式
     1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
 
+
 ### DEMO (App.vue)
 
 ```
@@ -198,4 +199,124 @@ this.$refs.treeSelect.filterFun(val);
 <style>
 #app {
     display: flex;
-    justify-content: spa
+    justify-content: space-between;
+    width: 600px;
+}
+</style>
+<script>
+export default {
+    name: 'App',
+    data() {
+        return {
+            styles: {
+                width: '300px'
+            },
+            test: '',
+            values: ['11111'],
+            selectParams: {
+                multiple: true,
+                clearable: true,
+                placeholder: '请输入内容'
+            },
+            treeParams: {
+                clickParent: false,
+                filterable: true,
+                'check-strictly': true,
+                'default-expand-all': true,
+                'expand-on-click-node': false,
+                data: [],
+                props: {
+                    children: 'child',
+                    label: 'name',
+                    disabled: 'disabled',
+                    value: 'testId'
+                }
+            }
+        };
+    },
+    mounted() {
+        let data = [
+            {
+                testId: '1',
+                name: '节点1',
+                disabled: true,
+                child: [
+                    {
+                        testId: '11111',
+                        name: '子节点'
+                    }
+                ]
+            },
+            {
+                testId: '2',
+                name: '节点2',
+                child: [
+                    {
+                        testId: '222222',
+                        disabled: true,
+                        name: '子节点'
+                    }
+                ]
+            },
+            {
+                testId: '3',
+                name: '节点3'
+            },
+            {
+                testId: '4',
+                name: '节点4'
+            },
+            {
+                testId: '5',
+                name: '节点5'
+            },
+            {
+                testId: '6',
+                name: '节点6'
+            }
+        ];
+        this.treeParams.data = data;
+        this.$refs.treeSelect.treeDataUpdateFun(data);
+    },
+    methods: {
+        // 下拉框修改
+        _selectChange(val) {
+            console.log(val, '<-select change');
+        },
+        // 树点击
+        _nodeClickFun(data, node, vm) {
+            console.log('this _nodeClickFun', this.values, data, node);
+        },
+        // 树过滤
+        _searchFun(value) {
+            console.log(value, '<--_searchFun');
+            // 自行判断 是走后台查询，还是前端过滤
+            // this.$refs.treeSelect.$refs.tree.filter(value);
+            this.$refs.treeSelect.filterFun(value);
+            // 后台查询
+            // this.$refs.treeSelect.treeDataUpdateFun(treeData);
+        },
+        // 自定义render
+        _renderFun(h, { node, data, store }) {
+            return (
+                <span class='custom-tree-node'>
+                    <span>{node.label}</span>
+                </span>
+            );
+        }
+    },
+    components: { }
+};
+</script>
+
+```
+
+## 安装
+```
+npm install el-tree-select --save-dev
+```
+## git 地址
+```
+https://github.com/ayiaq1/el-tree-select
+
+```
