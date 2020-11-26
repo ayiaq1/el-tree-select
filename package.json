@@ -1,6 +1,6 @@
 {
   "name": "el-tree-select",
-  "version": "3.1.9",
+  "version": "3.1.11",
   "description": "基于element-ui2.x扩展下拉带树的组件,目前已剥离组件可作为独立插件使用",
   "author": "dawdler",
   "private": false,

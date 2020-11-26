@@ -3,11 +3,11 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-09-28 10:51:40
+ * @LastEditTime: 2020-11-26 21:01:12
  -->
 <template>
     <div id="app">
-        <ElTreeSelect popoverClass="fas" v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" ref="treeSelect"></ElTreeSelect>
+        <ElTreeSelect popoverClass="fas" v-model="values" :styles="styles" :selectParams="selectParams" :treeParams="treeParams" :filterNodeMethod="_filterFun" ref="treeSelect" :treeRenderFun="_renderFun" @searchFun="_searchFun"></ElTreeSelect>
         <el-select multiple v-model="test" placeholder="请选择" @change="_selectChange">
             <el-option v-for="item in treeParams.data" :key="item.testId" :label="item.name" :value="item.testId"></el-option>
         </el-select>
@@ -93,6 +93,10 @@ export default {
         // 下拉框修改
         _selectChange(val) {
             console.log(val, '<-select change');
+        },
+        _filterFun(value, data, node) {
+            if (!value) return true;
+            return data.id.indexOf(value) !== -1;
         },
         // 树点击
         _nodeClickFun(data, node, vm) {

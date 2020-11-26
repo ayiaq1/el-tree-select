@@ -3,14 +3,14 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-09-28 10:50:05
+ * @LastEditTime: 2020-11-26 21:13:04
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
 
 ### Demo
 
-##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线API</a>
+##### <a href="https://ayiaq1.github.io/el-tree-select/website/#/components/ElTreeSelect" target="_blank">在线 API</a>
 
 ##### <a href="https://ayiaq1.github.io/el-tree-select/storybook-static" target="_blank">在线测试</a>
 
@@ -18,14 +18,16 @@
 
 ![Image text](https://github.com/ayiaq1/el-tree-select/raw/master/DEMO.jpg)
 
-### 如果本地启动API需要全局安装：npm install -g @vuese/cli
+### 如果本地启动 API 需要全局安装：npm install -g @vuese/cli
 
-### 需在main.js注册组件：
+### 需在 main.js 注册组件：
+
 ```
 import ElTreeSelect from 'el-tree-select';
 vue.use(ElTreeSelect);
 内部直接使用 :  <el-tree-select v-model="id"/>
 ```
+
 ### API：
 
 #### 特殊点(屏蔽 el-select、el-tree 的几个参数)：
@@ -68,7 +70,9 @@ treeParams.clickParent 类型：Boolean 默认：false
 在selectParams.multiple=false单选情况下点击节点，判断是否关闭弹出框
 clickParent: true 允许点击父级关闭弹出框 false 只能点击子级关闭弹出框
 ```
+
 #### popover 参数：
+
 ```
 popperClass  对应：popper-class,类型:String
 ```
@@ -86,6 +90,7 @@ treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到
 ```
 select-clear 下拉框清空事件   this.$emit('select-clear');
 ```
+
 ###### removeTag
 
 ```
@@ -138,6 +143,9 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+
+    3.1.11 增加参数：filter-node-method
+    3.1.10 修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。
     3.1.9 锁定element-ui最终版本2.13.2。修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。
     3.1.8 增加popover获取鼠标对象的多浏览器兼容性判断
     3.1.7 处理popover隐藏时判断当前对象报错问题
@@ -183,7 +191,6 @@ this.$refs.treeSelect.filterFun(val);
     1.4.5:修改webpack配置，打包css忽略z-index
     1.4.4:增加CSS样式
     1.4.3:增加clickParent，判断树菜单点击是否支持直接点击父级
-
 
 ### DEMO (App.vue)
 
@@ -312,10 +319,13 @@ export default {
 ```
 
 ## 安装
+
 ```
 npm install el-tree-select --save-dev
 ```
+
 ## git 地址
+
 ```
 https://github.com/ayiaq1/el-tree-select
 

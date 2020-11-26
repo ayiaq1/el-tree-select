@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-09-28 10:44:21
+ * @LastEditTime: 2020-11-26 20:57:27
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
@@ -17,7 +17,7 @@
             </el-input>
             <el-scrollbar tag="div" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" class="is-empty">
                 <!-- 树列表 -->
-                <el-tree ref="tree" v-show="data.length > 0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids.length > 0 ? ids[0] : ''" :show-checkbox="selectParams.multiple" :filter-node-method="_filterFun" :render-content="treeRenderFun" @node-click="_treeNodeClickFun" @check="_treeCheckFun"></el-tree>
+                <el-tree ref="tree" v-show="data.length > 0" v-bind="treeParams" :data="data" :node-key="propsValue" :draggable="false" :current-node-key="ids.length > 0 ? ids[0] : ''" :show-checkbox="selectParams.multiple" :filter-node-method="filterNodeMethod ? filterNodeMethod : _filterFun" :render-content="treeRenderFun" @node-click="_treeNodeClickFun" @check="_treeCheckFun"></el-tree>
                 <!-- 暂无数据 -->
                 <div v-if="data.length === 0" class="no-data">暂无数据</div>
             </el-scrollbar>
@@ -119,6 +119,8 @@ export default {
         },
         // 树渲染方法，具体参考el-tree Function(h, { node, data, store }) {}
         treeRenderFun: Function,
+        // 搜索过滤方法，具体参考el-tree Function(h, { value, data, node }) {}
+        filterNodeMethod: Function,
         /*
         文本框参数，几乎支持el-select所有的API<br>
         取消参数：<br>
