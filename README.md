@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-11-26 21:13:04
+ * @LastEditTime: 2020-11-26 21:15:14
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -84,6 +84,12 @@ treeParams.filterable   Boolean 考虑是显示在弹出框内的，因此放到
 ```
 
 ### 事件:
+
+###### filter-node-method
+
+```
+filter-node-method 自定义过滤方式
+```
 
 ###### select-clear
 
