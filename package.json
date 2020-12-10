@@ -20,7 +20,7 @@
     "tree"
   ],
   "scripts": {
-    "api": "vuese gen --title=el-tree-select && rmdir /s/q docs\\website && move website docs",
+    "api": "vuese gen",
     "api:open": "vuese serve --open",
     "build": "vue-cli-service build --target lib --name el-tree-select --dest dist src/components/index.js",
     "test:build": "vue-cli-service storybook:build -c config/storybook && rmdir /s/q docs\\storybook-static && move storybook-static docs",

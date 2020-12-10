@@ -127,7 +127,7 @@ export default {
         设定下拉框的弹出框隐藏：<br>
         `:popper-append-to-body="false"` <br>
         搜索从弹出框里面执行： <br>
-        `:filterable="false"`
+        `filterable="false"`
         */
         selectParams: {
             type: Object,
@@ -161,16 +161,17 @@ export default {
             type: Object,
             /*
             Object默认参数：<br><br>
-            在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框：`clickParent: false`<br><br>
-            是否显示搜索框：<br>
+            在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框：<br><br>
+            `clickParent: false`<br><br>
+            是否显示搜索框：<br><br>
             `filterable: false`<br><br>
-            leafOnly: false, <br>
-            getCheckedNodes() 是否只是叶子节点，默认值为 false <br>
-            includeHalfChecked: false,<br>
-            getCheckedNodes() 是否包含半选节点，默认值为 false<br>
-            下拉树的数据：<br>
+            是否只是叶子节点：<br><br>
+            `leafOnly: false`<br><br>
+            是否包含半选节点：<br><br>
+            `includeHalfChecked: false`<br><br>
+            下拉树的数据：<br><br>
             `data:[]`<br><br>
-            下拉树的props：<br>
+            下拉树的props：<br><br>
             `props: {`<br>
                 `children: 'children',`<br>
                 `label: 'name',`<br>
