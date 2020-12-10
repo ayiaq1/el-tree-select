@@ -149,7 +149,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
-
+    3.1.12 增加参数：子叶节点返回过滤(treeParams->leafOnly, includeHalfChecked)
     3.1.11 增加参数：filter-node-method
     3.1.10 修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。
     3.1.9 锁定element-ui最终版本2.13.2。修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。
