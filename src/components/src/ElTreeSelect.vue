@@ -164,6 +164,10 @@ export default {
             在有子级的情况下是否点击父级关闭弹出框,false 只能点击子级关闭弹出框：`clickParent: false`<br><br>
             是否显示搜索框：<br>
             `filterable: false`<br><br>
+            leafOnly: false, <br>
+            getCheckedNodes() 是否只是叶子节点，默认值为 false <br>
+            includeHalfChecked: false,<br>
+            getCheckedNodes() 是否包含半选节点，默认值为 false<br>
             下拉树的数据：<br>
             `data:[]`<br><br>
             下拉树的props：<br>
@@ -178,6 +182,8 @@ export default {
                 return {
                     clickParent: false,
                     filterable: false,
+                    leafOnly: false,
+                    includeHalfChecked: false,
                     data: [],
                     props: {
                         children: 'children',
@@ -197,6 +203,8 @@ export default {
             propsCode: null, // 可能有空的情况
             propsDisabled: 'disabled',
             propsChildren: 'children',
+            leafOnly: false,
+            includeHalfChecked: false,
             data: [],
             keywords: '',
             labels: '', // 存储名称，用于下拉框显示内容
@@ -206,14 +214,14 @@ export default {
         };
     },
     watch: {
-        ids: function(val) {
+        ids: function (val) {
             if (val !== undefined) {
                 this.$nextTick(() => {
                     this._setSelectNodeFun(val);
                 });
             }
         },
-        value: function(val) {
+        value: function (val) {
             if (this.ids !== val) {
                 this._setMultipleFun();
                 if (this.selectParams.multiple) {
@@ -231,13 +239,15 @@ export default {
         }
     },
     created() {
-        const { props, data } = this.treeParams;
+        const { props, data, leafOnly, includeHalfChecked } = this.treeParams;
         this._setMultipleFun();
         this.propsValue = props.value;
         this.propsLabel = props.label;
         this.propsCode = props.code || null; // 可能为空
         this.propsDisabled = props.disabled;
         this.propsChildren = props.children;
+        this.leafOnly = leafOnly;
+        this.includeHalfChecked = includeHalfChecked;
         this.data = data.length > 0 ? [...data] : [];
         if (this.selectParams.multiple) {
             this.labels = [];
@@ -290,13 +300,13 @@ export default {
             }
             if (multiple) {
                 // element-ui bug. 如果是父子节点全选 el.setCheckedKeys([非全量id]);之后el.getCheckedNodes()还是全量
-                el.getCheckedNodes().forEach(item => {
+                el.getCheckedNodes(this.leafOnly, this.includeHalfChecked).forEach(item => {
                     el.setChecked(item, false);
                 });
                 ids.forEach(id => {
                     el.setChecked(id, true);
                 });
-                const nodes = el.getCheckedNodes();
+                const nodes = el.getCheckedNodes(this.leafOnly, this.includeHalfChecked);
                 if (this.propsCode) {
                     // 如果有code   labels=code(name)
                     this.labels = nodes.map(item => (item[this.propsCode] ? item[this.propsLabel] + '(' + item[this.propsCode] + ')' : item[this.propsLabel])) || [];

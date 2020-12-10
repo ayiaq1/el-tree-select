@@ -43,6 +43,7 @@ export default {
             treeParams: {
                 clickParent: false,
                 filterable: true,
+                leafOnly: true, // 只想要子节点，不需要父节点
                 'check-strictly': false,
                 'default-expand-all': true,
                 'expand-on-click-node': false,
