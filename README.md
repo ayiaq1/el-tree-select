@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-11-26 21:15:14
+ * @LastEditTime: 2020-12-26 14:58:08
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -149,6 +149,10 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.13 
+          1.增加demo调试。
+          2.处理clickParent点击父节点判断问题。
+          3.打包优化，不再强制打包vue,element-ui。（要求项目必须引入element-ui）
     3.1.12 增加参数：子叶节点返回过滤(treeParams->leafOnly, includeHalfChecked)
     3.1.11 增加参数：filter-node-method
     3.1.10 修复bug:多选下如果父子节点全选，el-tag单一节点取消失败。

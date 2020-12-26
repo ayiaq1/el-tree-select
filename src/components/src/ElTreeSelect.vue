@@ -3,12 +3,12 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-11-26 20:57:27
+ * @LastEditTime: 2020-12-26 14:51:20
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
         <!-- 下拉文本 -->
-        <el-select :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun"> </el-select>
+        <el-select :id="'el-tree-select-' + guid" :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun"> </el-select>
         <!-- 弹出框 -->
         <el-popover ref="popover" :placement="placement" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
             <!-- 是否显示搜索框 -->
@@ -24,51 +24,13 @@
         </el-popover>
     </div>
 </template>
-<style>
-.el-tree-select .select-option {
-    display: none !important;
-}
 
-[aria-disabled='true'] > .el-tree-node__content {
-    color: inherit !important;
-    background: transparent !important;
-    cursor: no-drop !important;
-}
-
-.el-tree-select-popper {
-    max-height: 400px;
-    overflow: auto;
-}
-.el-tree-select-popper.disabled {
-    display: none !important;
-}
-.el-tree-select-popper .el-button--small {
-    width: 25px !important;
-    min-width: 25px !important;
-}
-
-.el-tree-select-popper[x-placement^='bottom'] {
-    margin-top: 5px;
-}
-
-.mb10 {
-    margin-bottom: 10px;
-}
-
-.no-data {
-    height: 32px;
-    line-height: 32px;
-    font-size: 14px;
-    color: #cccccc;
-    text-align: center;
-}
-</style>
 <script>
 import { on, off } from '../../utils/dom';
-import { each } from '../../utils/utils';
+import { each, guid } from '../../utils/utils';
 // @group api
 export default {
-    name: 'ElTreeSelect',
+    name: 'el-tree-select',
     props: {
         // v-model,存储的是treeParams.data里面的id
         value: {
@@ -199,6 +161,7 @@ export default {
     },
     data() {
         return {
+            guid: guid(),
             propsValue: 'flowId',
             propsLabel: 'name',
             propsCode: null, // 可能有空的情况
@@ -215,14 +178,14 @@ export default {
         };
     },
     watch: {
-        ids: function (val) {
+        ids: function(val) {
             if (val !== undefined) {
                 this.$nextTick(() => {
                     this._setSelectNodeFun(val);
                 });
             }
         },
-        value: function (val) {
+        value: function(val) {
             if (this.ids !== val) {
                 this._setMultipleFun();
                 if (this.selectParams.multiple) {
@@ -367,21 +330,27 @@ export default {
         _treeNodeClickFun(data, node, vm) {
             const { multiple } = this.selectParams;
             const { clickParent } = this.treeParams;
+            const checkStrictly = this.treeParams['check-strictly'];
             const { propsValue, propsChildren, propsDisabled } = this;
+            const children = data[propsChildren] || [];
             if (data[propsDisabled]) {
                 // 禁用
                 return;
             }
             if (node.checked) {
-                const value = data[this.propsValue];
+                const value = data[propsValue];
                 this.ids = this.ids.filter(id => id !== value);
+                if (!checkStrictly && children.length) {
+                    children.forEach(item => {
+                        this.ids = this.ids.filter(id => id !== item[propsValue]);
+                    });
+                }
             } else {
                 if (!multiple) {
                     // 多选，不关闭，单选，判断是否允许点击父级关闭弹出框
                     if (!clickParent) {
-                        const children = data[propsChildren];
                         // 如果不允许点击父级,自身为末级，允许点击之后关闭
-                        if (!children || children.length === 0) {
+                        if (children.length === 0) {
                             this.ids = [data[propsValue]];
                             this.visible = false;
                         } else {
@@ -393,7 +362,19 @@ export default {
                         this.visible = false;
                     }
                 } else {
-                    this.ids.push(data[propsValue]);
+                    if (!clickParent && children.length === 0) {
+                        // 如果不能点击父级
+                        this.ids.push(data[propsValue]);
+                    } else if (clickParent) {
+                        // 允许点击父级
+                        this.ids.push(data[propsValue]);
+                        // 如果父子关联，将子节点push进勾选项
+                        if (!checkStrictly && children.length) {
+                            children.forEach(item => {
+                                this.ids.push(item[propsValue]);
+                            });
+                        }
+                    }
                 }
             }
             this._emitFun();
@@ -505,3 +486,42 @@ export default {
     }
 };
 </script>
+<style>
+.el-tree-select .select-option {
+    display: none !important;
+}
+
+[aria-disabled='true'] > .el-tree-node__content {
+    color: inherit !important;
+    background: transparent !important;
+    cursor: no-drop !important;
+}
+
+.el-tree-select-popper {
+    max-height: 400px;
+    overflow: auto;
+}
+.el-tree-select-popper.disabled {
+    display: none !important;
+}
+.el-tree-select-popper .el-button--small {
+    width: 25px !important;
+    min-width: 25px !important;
+}
+
+.el-tree-select-popper[x-placement^='bottom'] {
+    margin-top: 5px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.no-data {
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #cccccc;
+    text-align: center;
+}
+</style>

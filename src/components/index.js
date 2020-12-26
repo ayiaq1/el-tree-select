@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @LastModifiedBy: dawdler
  * @Date: 2019-03-22 14:57:21
- * @LastEditTime: 2019-03-25 13:45:41
+ * @LastEditTime: 2020-12-26 14:45:53
  */
 import ElTreeSelect from './src/index.js';
 const Components = [ElTreeSelect];

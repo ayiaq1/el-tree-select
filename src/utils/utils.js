@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2019-01-09 15:30:18
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2019-03-22 16:31:42
+ * @LastEditTime: 2020-12-26 14:06:09
  */
 export default {
     getTreeData,
@@ -56,14 +56,7 @@ export function each(data, callback, childName = 'children') {
  * 返回所有匹配的数据
  * let arr=utils.getTreeData(arr, 'flowId', item.decategoryId, 'name','children',true);
  */
-export function getTreeData(
-    data,
-    id = 'id',
-    val = '',
-    name = 'name',
-    children = 'children',
-    isRow = false
-) {
+export function getTreeData(data, id = 'id', val = '', name = 'name', children = 'children', isRow = false) {
     let arr = [];
     each(
         data,
@@ -75,4 +68,11 @@ export function getTreeData(
         children
     );
     return arr.length > 0 ? (isRow ? arr : arr[0][name]) : null;
+}
+export function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = (Math.random() * 16) | 0;
+        let v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
 }
