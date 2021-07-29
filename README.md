@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-12-26 14:58:08
+ * @LastEditTime: 2021-07-29 14:12:05
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -149,6 +149,7 @@ this.$refs.treeSelect.filterFun(val);
 ```
 
 ### 更新日志
+    3.1.14 package.json增加BSD协议，合并提交 [暴露 el-popover 的 transition 属性]https://github.com/ayiaq1/el-tree-select/pull/72
     3.1.13 
           1.增加demo调试。
           2.处理clickParent点击父节点判断问题。
