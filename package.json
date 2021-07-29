@@ -4,6 +4,7 @@
   "description": "基于element-ui2.x扩展下拉带树的组件,目前已剥离组件可作为独立插件使用",
   "author": "dawdler",
   "private": false,
+  "license": "BSD",
   "repository": {
     "type": "git",
     "url": "https://github.com/ayiaq1/el-tree-select"
