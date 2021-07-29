@@ -10,7 +10,7 @@
         <!-- 下拉文本 -->
         <el-select :id="'el-tree-select-' + guid" :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun"> </el-select>
         <!-- 弹出框 -->
-        <el-popover ref="popover" :placement="placement" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
+        <el-popover ref="popover" :placement="placement" :transition="transition" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
             <!-- 是否显示搜索框 -->
             <el-input v-if="treeParams.filterable" v-model="keywords" size="mini" class="input-with-select mb10" @change="_searchFun">
                 <el-button slot="append" icon="el-icon-search"></el-button>
@@ -77,6 +77,14 @@ export default {
             //  bottom
             default() {
                 return 'bottom';
+            }
+        },
+        // 弹出框过渡动画
+        transition: {
+            type: String,
+            //  el-zoom-in-top
+            default() {
+                return 'el-zoom-in-top';
             }
         },
         // 树渲染方法，具体参考el-tree Function(h, { node, data, store }) {}
