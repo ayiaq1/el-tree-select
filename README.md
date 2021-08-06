@@ -3,7 +3,7 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2021-07-29 14:12:05
+ * @LastEditTime: 2021-08-06 15:51:45
  -->
 
 ## 基于 element-ui 2.x 扩展下拉带树的组件 下拉树状菜单
@@ -74,7 +74,7 @@ clickParent: true 允许点击父级关闭弹出框 false 只能点击子级关�
 #### popover 参数：
 
 ```
-popperClass  对应：popper-class,类型:String
+popoverClass  对应：popper-class,类型:String
 ```
 
 #### 搜索框参数：
