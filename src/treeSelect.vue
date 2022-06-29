@@ -78,7 +78,7 @@ export default {
                 for (let b = 0; b < 5; b++) {
                     let endId = `${subId}_${b}`;
                     let endNode = {
-                        [label]: `末级节点：${endId}`,
+                        [label]: `末级节点：0`,
                         [parentId]: subNode[value],
                         [value]: endId,
                         [children]: []
@@ -95,8 +95,9 @@ export default {
     },
     methods: {
         _filterFun(value, data, node) {
+            const { label } = this.treeParams.props;
             if (!value) return true;
-            return data.id.indexOf(value) !== -1;
+            return data[label].indexOf(value) !== -1;
         },
         // 树点击
         _nodeClickFun(data, node, vm) {

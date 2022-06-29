@@ -3,12 +3,14 @@
  * @Author: dawdler
  * @Date: 2018-12-19 14:03:03
  * @LastModifiedBy: dawdler
- * @LastEditTime: 2020-12-26 14:51:20
+ * @LastEditTime: 2021-12-23 17:52:04
  -->
 <template>
     <div class="el-tree-select" :class="selectClass">
         <!-- 下拉文本 -->
-        <el-select :id="'el-tree-select-' + guid" :style="styles" class="el-tree-select-input" v-model="labels" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun"> </el-select>
+        <el-select :id="'el-tree-select-' + guid" :style="styles" class="el-tree-select-input" v-model="ids" :disabled="disabled" popper-class="select-option" ref="select" v-bind="selectParams" :popper-append-to-body="false" :filterable="false" :multiple="selectParams.multiple" v-popover:popover @remove-tag="_selectRemoveTag" :title="labels" @clear="_selectClearFun" @focus="_popoverShowFun">
+            <el-option v-for="item in options" :key="item[propsValue]" :label="item[propsLabel]" :value="item[propsValue]"> </el-option>
+        </el-select>
         <!-- 弹出框 -->
         <el-popover ref="popover" :placement="placement" :transition="transition" :popper-class="popperClass" :width="width" v-model="visible" trigger="click">
             <!-- 是否显示搜索框 -->
@@ -182,7 +184,8 @@ export default {
             labels: '', // 存储名称，用于下拉框显示内容
             ids: [], // 存储id
             visible: false, // popover v-model
-            width: 150
+            width: 150,
+            options: []
         };
     },
     watch: {
@@ -221,6 +224,7 @@ export default {
         this.leafOnly = leafOnly;
         this.includeHalfChecked = includeHalfChecked;
         this.data = data.length > 0 ? [...data] : [];
+        this.options = this._treeFlatten(data);
         if (this.selectParams.multiple) {
             this.labels = [];
             this.ids = this.value;
@@ -236,6 +240,21 @@ export default {
         });
     },
     methods: {
+        _treeFlatten(arr) {
+            if (!(arr instanceof Array)) return []
+            const { propsChildren, propsValue, propsLabel } = this;
+            let tempArr = [];
+            arr.forEach((item) => {
+                tempArr.push({
+                    [propsLabel]: item[propsLabel],
+                    [propsValue]: item[propsValue]
+                })
+                if (item[propsChildren] instanceof Array) {
+                    tempArr = tempArr.concat(this._treeFlatten(item[propsChildren]));
+                }
+            })
+            return tempArr;
+        },
         // 根据类型判断单选，多选
         _setMultipleFun() {
             let multiple = false;
@@ -471,6 +490,7 @@ export default {
          */
         treeDataUpdateFun(data) {
             this.data = data;
+            this.options = this._treeFlatten(data);
             // 数据更新完成之后，判断是否回显内容
             if (data.length > 0) {
                 setTimeout(() => {
