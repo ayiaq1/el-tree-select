@@ -458,7 +458,7 @@ export default {
             const path = this._getEventPath(e);
             let isInside = path.some(list => {
                 // 鼠标在弹出框内部，阻止隐藏弹出框
-                return list.className && typeof list.className === 'string' && list.className.indexOf('el-tree-select') !== -1;
+                return list.id === `el-tree-select-${this.guid}`;
             });
             if (!isInside) {
                 this.visible = false;
